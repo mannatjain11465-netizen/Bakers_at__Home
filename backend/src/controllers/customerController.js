@@ -1,4 +1,5 @@
 const Customer = require("../models/Customer");
+const Order = require("../models/Orders");
 
 const createCustomer = async (req, res) => {
   try {
@@ -102,10 +103,64 @@ const deleteCustomer = async (req, res) => {
   }
 };
 
+const getCustomerProfile = async (req, res) => {
+    try {
+
+        const customer = await Customer.findById(req.params.id);
+
+        if (!customer) {
+            return res.status(404).json({
+                success: false,
+                message: "Customer not found"
+            });
+        }
+
+        const orders = await Order.find({
+            customer: req.params.id
+        }).sort({ createdAt: -1 });
+
+        const totalOrders = orders.length;
+
+        const totalSpent = orders.reduce(
+            (sum, order) =>
+                sum + order.payment.totalAmount,
+            0
+        );
+
+        const lastOrderDate =
+            orders.length > 0
+                ? orders[0].createdAt
+                : null;
+
+        res.status(200).json({
+            success: true,
+
+            customer,
+
+            stats: {
+                totalOrders,
+                totalSpent,
+                lastOrderDate
+            },
+
+            orders
+        });
+
+    } catch (error) {
+
+        res.status(500).json({
+            success: false,
+            message: error.message
+        });
+
+    }
+};
+
 module.exports = {
   createCustomer,
   getAllCustomers,
   getCustomerById,
   updateCustomer,
-  deleteCustomer
+  deleteCustomer,
+  getCustomerProfile
 };
