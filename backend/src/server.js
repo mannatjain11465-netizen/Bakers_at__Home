@@ -1,5 +1,6 @@
 const express = require("express");
 require("dotenv").config();
+const cors = require("cors");
 
 const customerRoutes = require("./routes/customerRoutes");
 const orderRoutes = require("./routes/orderRoutes");
@@ -13,6 +14,7 @@ const app = express();
 connectDB();
 
 app.use(express.json());
+app.use(cors());
 
 app.use("/api/customers", customerRoutes);
 app.use("/api/orders", orderRoutes);
