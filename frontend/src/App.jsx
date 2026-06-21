@@ -4,6 +4,8 @@ import Dashboard from "./pages/Dashboard";
 import Customers from "./pages/Customers";
 import Orders from "./pages/Orders";
 import Calendar from "./pages/Calendar";
+import CreateOrder from "./pages/CreateOrder";
+import CreateCustomer from "./pages/CreateCustomer";
 
 function App() {
   return (
@@ -17,6 +19,10 @@ function App() {
         <Route path="/orders" element={<Orders />} />
 
         <Route path="/calendar" element={<Calendar />} />
+
+        <Route path="/create-order" element={<CreateOrder />} />
+
+        <Route path="/create-customer" element={<CreateCustomer />} />
 
       </Routes>
     </BrowserRouter>

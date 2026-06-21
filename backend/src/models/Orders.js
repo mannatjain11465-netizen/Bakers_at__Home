@@ -14,6 +14,8 @@ const orderSchema = new mongoose.Schema(
   },
 
   celebrant: {
+    name: String,
+     relation: String,
     gender: String,
     age: Number,
   },
