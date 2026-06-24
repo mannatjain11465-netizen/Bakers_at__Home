@@ -6,6 +6,7 @@ import Orders from "./pages/Orders";
 import Calendar from "./pages/Calendar";
 import CreateOrder from "./pages/CreateOrder";
 import CreateCustomer from "./pages/CreateCustomer";
+import SingleOrder from "./pages/SingleOrder";
 
 function App() {
   return (
@@ -23,6 +24,8 @@ function App() {
         <Route path="/create-order" element={<CreateOrder />} />
 
         <Route path="/create-customer" element={<CreateCustomer />} />
+
+        <Route path="/orders/:orderId" element={<SingleOrder />} />
 
       </Routes>
     </BrowserRouter>

@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import Sidebar from "../components/Sidebar";
 import API from "../services/api";
+import { useNavigate } from "react-router-dom";
 
 function Orders() {
 
     const [orders, setOrders] = useState([]);
+    const navigate = useNavigate();
 
     useEffect(() => {
 
@@ -59,26 +61,22 @@ function Orders() {
                         </p>
 
                         <p>
+                            Order Type :{order.orderType}
+                        </p>
+
+                        <p>
+                            Amount :₹{order.payment.totalAmount}
+                        </p>
+
+                        <p>
                             Status :{" "}
                             {order.status}
                         </p>
 
-                        <p>
-                            Customer : {order.customer.name}
-                        </p>
+                        <button onClick={() => navigate(`/orders/${order._id}`)}>
+                            View Details
+                        </button>
 
-                        <p>
-                            Celebrant : {order.celebrant.name}
-                        </p>
-
-                        <p>
-                            Age : {order.celebrant.age}
-                        </p>
-
-                        <p>
-                            Occasion : {order.occasion}
-                        </p>
-                        
                         <hr />
 
                     </div>

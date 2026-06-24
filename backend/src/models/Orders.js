@@ -87,6 +87,18 @@ const orderSchema = new mongoose.Schema(
       required: true,
     },
 
+  paymentMethod: {
+      type: String,
+      enum: ["Cash", "Google Pay"],
+      default: "Cash"
+    },
+  
+    paymentStatus: {
+      type: String,
+      enum: ["Pending", "Partially Paid", "Paid"],
+      default: "Pending",
+    },
+
     advancePaid: {
       type: Number,
       default: 0,
@@ -102,7 +114,7 @@ const orderSchema = new mongoose.Schema(
     type: String,
     enum: [
       "Inquiry",
-      "Quoted",
+      "Discussion",
       "Confirmed",
       "In Progress",
       "Ready",
