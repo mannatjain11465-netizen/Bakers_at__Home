@@ -1,69 +1,29 @@
 import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import Sidebar from "../components/Sidebar";
 import OrderForm from "../components/OrderForm";
 import API from "../services/api";
-import { useNavigate } from "react-router-dom";
 
-function CreateOrder() {
-    const [customers, setCustomers] = useState([]);
+function EditOrder(){
+    const {orderId} = useParams();
     const navigate = useNavigate();
-
-    const initialFormData = {
-        customer: "",
-
-        occasion: "",
-
-        celebrant: {
-            name: "",
-            relation: "",
-            gender: "",
-            age: ""
-        },
-
-        deliveryDate: "",
-
-        deliveryTime: "",
-
-        orderType: "Pickup",
-
-        deliveryAddressType: "Home",
-        deliveryAddress: "",
-
-        items: [
-        {
-            category: "",
-            name: "",
-            quantity: 1,
-            unit: "",
-            weight: "",
-            flavour: "",
-            unitPrice: ""
-        }
-        ],
-
-        payment: {
-            totalAmount: "",
-            advancePaid: "",
-            remainingAmount: "",
-            paymentMethod: "Cash",
-            paymentStatus: "Pending"
-        },
-
-        status: "Inquiry",
-
-        discussionNotes: ""
-    };
-    const [formData, setFormData] = useState(initialFormData);
+    const [customers, setCustomers] = useState([]);
+    const [formData, setFormData] = useState(null);
 
     useEffect(() => {
-        API.get("/customers")
-            .then((response) => {
-                setCustomers(response.data.data);
-            })
-            .catch((error) => {
+        const fetchData = async () => {
+            try{
+                const customerResponse = await API.get("/customers");
+                setCustomers(customerResponse.data.data);
+                const orderResponse = await API.get(`/orders/${orderId}`);
+                setFormData(orderResponse.data.data);
+            }
+            catch(error){
                 console.log(error);
-            });
-    }, []);
+            }
+        };
+        fetchData();
+    }, [orderId]);
 
     const handleChange = (event) => {
         setFormData({
@@ -124,16 +84,15 @@ function CreateOrder() {
             (customer) => customer._id === formData.customer
         );
         let address = "";
-        if(
-            formData.orderType==="Delivery" && !selectedCustomer
-        ){
-            alert=("Please select a customer")
-            return;
-        }
         if (formData.orderType === "Delivery") {
+            if(!selectedCustomer){
+                alert("Please select a customer");
+                return;
+            }
             if (formData.deliveryAddressType === "Home") {
                 address = `${selectedCustomer.building}, Flat ${selectedCustomer.flatNumber}`;
-            } else {
+            } 
+            else {
                 address = formData.deliveryAddress;
             }
         }
@@ -142,34 +101,41 @@ function CreateOrder() {
             address: address
         };
         try{
-            const response = await API.post("/orders", payload);
-            setFormData(initialFormData);
-            alert("Order created successfully!");
-            navigate(`/orders/${response.data.data._id}`);
+            await API.put(`/orders/${orderId}`,payload);
+            alert("Order updated successfully");
+            navigate(`/orders/${orderId}`);
         }
         catch(error){
-            console.log(error.response.data);
-            alert(error.response.data.message);
+            console.log(error.response?.data || error);
+            alert("Failed to update Order");
         }
     };
 
+    if(!formData){
+        return(
+            <>
+            <Sidebar/>
+            <h1>Loading...</h1>
+            </>
+        )
+    }
+
     return (
         <>
-            <Sidebar />
+                <Sidebar/>
+                <OrderForm
+                    formData={formData}
+                    customers={customers}
+                    handleChange={handleChange}
+                    handleCelebrantChange={handleCelebrantChange}
+                    handleItemChange={handleItemChange}
+                    handlePaymentChange={handlePaymentChange}
+                    handleSubmit={handleSubmit}
+                    heading="Edit Order"
+                    buttonText="Save Changes"
+                />
+            </>
+    )
 
-            <OrderForm 
-                formData={formData}
-                customers={customers}
-                handleChange={handleChange}
-                handleCelebrantChange={handleCelebrantChange}
-                handleItemChange={handleItemChange}
-                handlePaymentChange={handlePaymentChange}
-                handleSubmit={handleSubmit}
-                heading="Create Order"          
-                buttonText="Create Order"
-            />
-        </>
-    );
 }
-
-export default CreateOrder;
+export default EditOrder;

@@ -7,6 +7,8 @@ function Orders() {
 
     const [orders, setOrders] = useState([]);
     const navigate = useNavigate();
+    const [searchTerm, setSearchTerm] = useState("");
+    const [statusFilter, setStatusFilter] = useState("All");
 
     useEffect(() => {
 
@@ -26,6 +28,15 @@ function Orders() {
 
     }, []);
 
+    const filteredOrders = orders.filter((order) => {
+        const customerName = order.customer.name.toLowerCase();
+        const occasion = order.occasion.toLowerCase();
+        const search = searchTerm.toLowerCase();
+        const matchesSearch = customerName.includes(search) || occasion.includes(search)
+        const matchesStatus = statusFilter === "All" || order.status === statusFilter;
+        return matchesSearch && matchesStatus;
+    })
+
     return (
         <>
             <Sidebar />
@@ -33,11 +44,30 @@ function Orders() {
             <h1>Orders Page</h1>
 
             <h2>
-                Total Orders: {orders.length}
+                Showing {filteredOrders.length} of {orders.length} orders
             </h2>
 
+            <input
+                type="text"
+                placeholder="Search by customer or occasion..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+            />
+
+            <select 
+                value={statusFilter}
+                onChange={(e) => setStatusFilter(e.target.value)}>
+                    <option value="All">All</option>
+                    <option value="Inquiry">Inquiry</option>
+                    <option value="Discussion">Discussion</option>
+                    <option value="Confirmed">Confirmed</option>
+                    <option value="In Progress">In Progress</option>
+                    <option value="Ready">Ready</option>
+                    <option value="Delivered">Delivered</option>
+            </select>
+
             {
-                orders.map((order) => (
+                filteredOrders.map((order) => (
 
                     <div key={order._id}>
 

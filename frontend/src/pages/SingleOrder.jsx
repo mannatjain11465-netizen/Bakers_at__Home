@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Sidebar from "../components/Sidebar";
 import API from "../services/api";
 
@@ -7,6 +7,7 @@ function SingleOrder() {
 const [order, setOrder] = useState(null);
 const { orderId } = useParams();
 const [status, setStatus] = useState("");
+const navigate = useNavigate();
 
 const handleStatusUpdate = () => {
     API.put(`/orders/${orderId}/status`, { status })
@@ -21,6 +22,23 @@ const handleStatusUpdate = () => {
             alert("Failed to update status.");
         });
 };
+
+const handleDelete = async () => {
+    const confirmDelete = window.confirm(
+        "Are you sure you want to delete this order"
+    );
+    if(!confirmDelete)
+            return;
+    try{
+        await API.delete(`/orders/${orderId}`);
+        alert ("Order deleted successfully!");
+        navigate("/orders");
+    }
+    catch(error){
+        console.log(error);
+        alert("Failed to delete order");
+    }
+}
 
 useEffect(() => {
     API.get(`/orders/${orderId}`)
@@ -188,6 +206,12 @@ return (
         <p>
             {order.discussionNotes || "No notes"}
         </p>
+
+        <button onClick={() => navigate(`/orders/${orderId}/edit`)}>
+            Edit Order
+        </button>
+
+        <button onClick={handleDelete}>Delete Order</button>
     </>
 );
 
