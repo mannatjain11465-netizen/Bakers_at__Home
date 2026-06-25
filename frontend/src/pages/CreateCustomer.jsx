@@ -1,7 +1,8 @@
 import { useState } from "react";
 import Sidebar from "../components/Sidebar";
 import API from "../services/api";
-
+import CustomerForm from "../components/CustomerForm";
+import { useNavigate } from "react-router-dom";
 function CreateCustomer() {
 
     const [formData, setFormData] = useState({
@@ -11,6 +12,7 @@ function CreateCustomer() {
         flatNumber: "",
         notes: ""
     });
+    const navigate = useNavigate();
 
     const handleChange = (event) => {
 
@@ -30,18 +32,15 @@ function CreateCustomer() {
 
             console.log(response.data);
 
-            setFormData({
-                name: "",
-                phone: "",
-                building: "",
-                flatNumber: "",
-                notes: ""
-            });
+            alert("Customer created successfully!");
+
+
+            navigate(`/customers/${response.data.data._id}`);
 
         })
             .catch((error) => {
 
-                console.log(error);
+                console.log("Failed to create customer.");
 
         });
 
@@ -51,70 +50,13 @@ function CreateCustomer() {
         <>
             <Sidebar />
 
-            <h1>Create Customer</h1>
-
-            <form onSubmit={handleSubmit}>
-
-                <input
-                    type="text"
-                    name="name"
-                    placeholder="Customer Name"
-                    value={formData.name}
-                    onChange={handleChange}
-                />
-
-                <br />
-                <br />
-
-                <input
-                    type="text"
-                    name="phone"
-                    placeholder="Phone Number"
-                    value={formData.phone}
-                    onChange={handleChange}
-                />
-
-                <br />
-                <br />
-
-                <input
-                    type="text"
-                    name="building"
-                    placeholder="Building"
-                    value={formData.building}
-                    onChange={handleChange}
-                />
-
-                <br />
-                <br />
-
-                <input
-                    type="text"
-                    name="flatNumber"
-                    placeholder="Flat Number"
-                    value={formData.flatNumber}
-                    onChange={handleChange}
-                />
-
-                <br />
-                <br />
-
-                <input
-                    type="text"
-                    name="notes"
-                    placeholder="Notes"
-                    value={formData.notes}
-                    onChange={handleChange}
-                />
-
-                <br />
-                <br />
-
-                <button type="submit">
-                    Create Customer
-                </button>
-
-            </form>
+            <CustomerForm 
+                formData={formData}
+                handleChange={handleChange}
+                handleSubmit={handleSubmit}
+                heading= "Create Customer"
+                buttonText="Create Customer"
+            />
 
         </>
     );

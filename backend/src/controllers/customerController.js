@@ -84,22 +84,42 @@ const updateCustomer = async (req, res) => {
 
 const deleteCustomer = async (req, res) => {
   try {
-    const customer = await Customer.findByIdAndDelete(req.params.id);
+
+    const customer = await Customer.findById(req.params.id);
+
     if (!customer) {
       return res.status(404).json({
         success: false,
         message: "Customer not found",
       });
     }
+
+    const existingOrders = await Order.find({
+      customer: req.params.id,
+    });
+
+    if (existingOrders.length > 0) {
+      return res.status(400).json({
+        success: false,
+        message:
+          "Cannot delete customer because existing orders are linked to this customer.",
+      });
+    }
+
+    await Customer.findByIdAndDelete(req.params.id);
+
     return res.status(200).json({
       success: true,
       message: "Customer deleted successfully",
     });
+
   } catch (error) {
-    res.status(500).json({
+
+    return res.status(500).json({
       success: false,
       message: error.message,
     });
+
   }
 };
 
@@ -117,7 +137,9 @@ const getCustomerProfile = async (req, res) => {
 
         const orders = await Order.find({
             customer: req.params.id
-        }).sort({ createdAt: -1 });
+        })
+        .populate("customer")
+        .sort({ createdAt: -1 });
 
         const totalOrders = orders.length;
 

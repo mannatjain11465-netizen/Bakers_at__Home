@@ -2,12 +2,13 @@ import { useEffect, useState } from "react";
 import Sidebar from "../components/Sidebar";
 import OrderForm from "../components/OrderForm";
 import API from "../services/api";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 function CreateOrder() {
     const [customers, setCustomers] = useState([]);
     const navigate = useNavigate();
-
+    const [searchParams] = useSearchParams();
+    const selectedCustomerId = searchParams.get("customer");
     const initialFormData = {
         customer: "",
 
@@ -54,6 +55,15 @@ function CreateOrder() {
         discussionNotes: ""
     };
     const [formData, setFormData] = useState(initialFormData);
+
+    useEffect(() => {
+        if(selectedCustomerId){
+            setFormData((prev) => ({
+                ...prev,
+                customer: selectedCustomerId
+            }));
+        }
+    }, [selectedCustomerId])
 
     useEffect(() => {
         API.get("/customers")
@@ -127,7 +137,7 @@ function CreateOrder() {
         if(
             formData.orderType==="Delivery" && !selectedCustomer
         ){
-            alert=("Please select a customer")
+            alert("Please select a customer")
             return;
         }
         if (formData.orderType === "Delivery") {
@@ -143,7 +153,10 @@ function CreateOrder() {
         };
         try{
             const response = await API.post("/orders", payload);
-            setFormData(initialFormData);
+            setFormData({
+                ...initialFormData,
+                customer: selectedCustomerId || ""
+            });
             alert("Order created successfully!");
             navigate(`/orders/${response.data.data._id}`);
         }

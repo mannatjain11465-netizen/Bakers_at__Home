@@ -8,7 +8,8 @@ import CreateOrder from "./pages/CreateOrder";
 import CreateCustomer from "./pages/CreateCustomer";
 import SingleOrder from "./pages/SingleOrder";
 import EditOrder from "./pages/EditOrder";
-
+import CustomerProfile from "./pages/CustomerProfile";
+import EditCustomer from "./pages/EditCustomer";
 function App() {
   return (
     <BrowserRouter>
@@ -29,6 +30,10 @@ function App() {
         <Route path="/orders/:orderId" element={<SingleOrder />} />
 
         <Route path= "/orders/:orderId/edit" element={<EditOrder/>}/>
+
+        <Route path= "/customers/:customerId" element={<CustomerProfile/>}/>
+
+        <Route path="/customers/:customerId/edit" element={<EditCustomer />}/>
 
       </Routes>
     </BrowserRouter>
