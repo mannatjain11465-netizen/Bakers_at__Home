@@ -1,17 +1,24 @@
 import { useEffect, useState } from "react";
 import Sidebar from "../components/Sidebar";
 import API from "../services/api";
+import DashboardCards from "../components/DashboardCards";
+import RevenueCards from "../components/RevenueCards";
+import UpcomingOrders from "../components/UpcomingOrders";
+import { useNavigate } from "react-router-dom";
 
 function Dashboard() {
 
-    const [stats, setStats] = useState({});
+    const [dashboardData, setDashboardData] = useState(null);
+    const navigate = useNavigate();
 
     useEffect(() => {
 
-        API.get("/dashboard/stats")
+        API.get("/dashboard")
             .then((response) => {
 
-                setStats(response.data.data);
+                console.log(response.data);
+
+                setDashboardData(response.data.data);
 
             })
             .catch((error) => {
@@ -22,39 +29,38 @@ function Dashboard() {
 
     }, []);
 
+    if (!dashboardData) {
+        return (
+            <>
+                <Sidebar />
+                <h2>Loading...</h2>
+            </>
+        );
+    }
+
     return (
         <>
             <Sidebar />
 
             <h1>Dashboard</h1>
 
-            <h2>
-                Total Customers : {stats.totalCustomers}
-            </h2>
+            <DashboardCards
+                totalCustomers={dashboardData.totalCustomers}
+                totalOrders={dashboardData.totalOrders}
+                pendingOrders={dashboardData.pendingOrders}
+                completedOrders={dashboardData.completedOrders}/>
 
-            <h2>
-                Total Orders : {stats.totalOrders}
-            </h2>
+            <RevenueCards
+                totalRevenue={dashboardData.totalRevenue}
+                revenueReceived={dashboardData.revenueReceived}
+                pendingPayments={dashboardData.pendingPayments}/>
 
-            <h2>
-                Pending Orders : {stats.pendingOrders}
-            </h2>
+            <UpcomingOrders
+                orders={dashboardData.upcomingOrders}/>
 
-            <h2>
-                Completed Orders : {stats.completedOrders}
-            </h2>
-
-            <h2>
-                Total Revenue : ₹{stats.totalRevenue}
-            </h2>
-
-            <h2>
-                Revenue Received : ₹{stats.revenueReceived}
-            </h2>
-
-            <h2>
-                Pending Payments : ₹{stats.pendingPayments}
-            </h2>
+            <button
+                onClick={() => navigate(`/orders/${order._id}`)}>
+                View Details</button>
 
         </>
     );

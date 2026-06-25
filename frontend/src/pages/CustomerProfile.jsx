@@ -30,13 +30,13 @@ function CustomerProfile() {
         );
         if (!confirmDelete) return;
         try {
-            await API.delete(`/customers/${customerId}`);
-            alert("Customer deleted successfully!");
+            const response = await API.delete(`/customers/${customerId}`);
+            alert(response.data.message);
             navigate("/customers");
         } 
         catch (error) {
             console.log(error);
-            alert("Failed to delete customer.");
+            alert(error.response?.data?.message || "Failed to delete customer.");
         }
 
     };
