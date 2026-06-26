@@ -114,7 +114,6 @@ const orderSchema = new mongoose.Schema(
     type: String,
     enum: [
       "Inquiry",
-      "Discussion",
       "Confirmed",
       "In Progress",
       "Ready",

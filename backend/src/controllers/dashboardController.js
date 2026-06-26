@@ -1,7 +1,7 @@
 const Order = require("../models/Orders");
 const Customer = require("../models/Customer");
 
-const getDashboardStats = async (req, res) => {
+const getDashboard = async (req, res) => {
     try {
 
         const totalCustomers =
@@ -10,17 +10,21 @@ const getDashboardStats = async (req, res) => {
         const totalOrders =
             await Order.countDocuments();
 
-        const pendingOrders =
+        const activeOrders =
             await Order.countDocuments({
                 status: {
                     $in: [
                         "Inquiry",
-                        "Quoted",
                         "Confirmed",
                         "In Progress",
                         "Ready"
                     ]
                 }
+            });
+
+        const inquiryOrders = 
+            await Order.countDocuments({
+                status: "Inquiry"
             });
 
         const completedOrders =
@@ -48,14 +52,16 @@ const getDashboardStats = async (req, res) => {
             0
         );
 
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+
         const upcomingOrders = await Order.find({
             deliveryDate: {
-                $gte: new Date()
+                $gte: today
             }
-        })
-        .populate("customer")
-        .sort({ deliveryDate: 1 })
-        .limit(5);
+        }).populate("customer")
+            .sort({ deliveryDate: 1 })
+            .limit(5);
 
         res.status(200).json({
             success: true,
@@ -63,7 +69,8 @@ const getDashboardStats = async (req, res) => {
             data: {
                 totalCustomers,
                 totalOrders,
-                pendingOrders,
+                activeOrders,
+                inquiryOrders,
                 completedOrders,
                 totalRevenue,
                 revenueReceived,
@@ -83,5 +90,5 @@ const getDashboardStats = async (req, res) => {
 };
 
 module.exports = {
-    getDashboardStats
+    getDashboard
 };

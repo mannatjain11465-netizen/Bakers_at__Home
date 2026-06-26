@@ -3,17 +3,26 @@ const Order = require("../models/Orders");
 const getCalendarOrders = async (req, res) => {
     try {
 
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+
         const orders = await Order.find({
             deliveryDate: {
-                $gte: new Date()
+                $gte: today
             },
 
             status: {
                 $nin: ["Cancelled", "Delivered"]
             }
         })
-        .populate("customer")
-        .sort({ deliveryDate: 1 });
+            .select(
+                "occasion deliveryDate deliveryTime status items customer"
+            )
+            .populate(
+                "customer",
+                "name"
+            )
+            .sort({ deliveryDate: 1 });
 
         res.status(200).json({
             success: true,
