@@ -22,7 +22,7 @@ const getDashboard = async (req, res) => {
                 }
             });
 
-        const inquiryOrders = 
+        const inquiryOrders =
             await Order.countDocuments({
                 status: "Inquiry"
             });
@@ -32,7 +32,7 @@ const getDashboard = async (req, res) => {
                 status: "Delivered"
             });
 
-        const orders = await Order.find();
+        const orders = await Order.find().select("payment");
 
         const totalRevenue = orders.reduce(
             (sum, order) =>
@@ -55,13 +55,50 @@ const getDashboard = async (req, res) => {
         const today = new Date();
         today.setHours(0, 0, 0, 0);
 
+        const tomorrow = new Date(today);
+        tomorrow.setDate(today.getDate() + 1);
+
+        const todayOrders =
+            await Order.countDocuments({
+                deliveryDate: {
+                    $gte: today,
+                    $lt: tomorrow
+                },
+                status: {
+                    $nin: [
+                        "Cancelled",
+                        "Delivered"
+                    ]
+                }
+            });
+
+        const dayAfterTomorrow = new Date(tomorrow);
+        dayAfterTomorrow.setDate(
+            tomorrow.getDate() + 1
+        );
+
         const upcomingOrders = await Order.find({
             deliveryDate: {
                 $gte: today
             }
-        }).populate("customer")
+        })
+            .populate("customer")
             .sort({ deliveryDate: 1 })
             .limit(5);
+
+        const tomorrowOrders =
+            await Order.countDocuments({
+                deliveryDate: {
+                    $gte: tomorrow,
+                    $lt: dayAfterTomorrow
+                },
+                status: {
+                    $nin: [
+                        "Cancelled",
+                        "Delivered"
+                    ]
+                }
+            });
 
         res.status(200).json({
             success: true,
@@ -75,7 +112,9 @@ const getDashboard = async (req, res) => {
                 totalRevenue,
                 revenueReceived,
                 pendingPayments,
-                upcomingOrders
+                upcomingOrders,
+                todayOrders,
+                tomorrowOrders
             }
         });
 

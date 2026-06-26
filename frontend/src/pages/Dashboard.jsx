@@ -85,7 +85,9 @@ function Dashboard() {
 
             <PendingActions 
                 inquiryOrders={dashboardData.inquiryOrders}
-                pendingPayments={dashboardData.pendingPayments}/>
+                pendingPayments={dashboardData.pendingPayments}
+                todayOrders = {dashboardData.todayOrders}
+                tomorrowOrders={dashboardData.tomorrowOrders}/>
 
             <Heatmap
                 heatmapData={heatmapData}/>

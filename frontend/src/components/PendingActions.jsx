@@ -1,6 +1,8 @@
 function PendingActions({
     inquiryOrders,
-    pendingPayments
+    pendingPayments,
+    todayOrders,
+    tomorrowOrders
 }) {
 
     return (
@@ -19,6 +21,20 @@ function PendingActions({
                 <div>
                     <h3>Pending Payments</h3>
                     <p>₹{pendingPayments}</p>
+                </div>
+
+                <hr />
+
+                <div>
+                    <h3>Today's Orders</h3>
+                    <p>{todayOrders}</p>
+                </div>
+
+                <hr />
+
+                <div>
+                    <h3>Tomorrow's Orders</h3>
+                    <p>{tomorrowOrders}</p>
                 </div>
 
             </div>
