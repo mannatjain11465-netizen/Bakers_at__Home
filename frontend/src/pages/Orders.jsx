@@ -59,7 +59,6 @@ function Orders() {
                 onChange={(e) => setStatusFilter(e.target.value)}>
                     <option value="All">All</option>
                     <option value="Inquiry">Inquiry</option>
-                    <option value="Discussion">Discussion</option>
                     <option value="Confirmed">Confirmed</option>
                     <option value="In Progress">In Progress</option>
                     <option value="Ready">Ready</option>

@@ -3,12 +3,15 @@ import Sidebar from "../components/Sidebar";
 import API from "../services/api";
 import DashboardCards from "../components/DashboardCards";
 import RevenueCards from "../components/RevenueCards";
+import PendingActions from "../components/PendingActions";
 import UpcomingOrders from "../components/UpcomingOrders";
+import Heatmap from "../components/Heatmap";
 import { useNavigate } from "react-router-dom";
 
 function Dashboard() {
 
     const [dashboardData, setDashboardData] = useState(null);
+    const [heatmapData, setHeatmapData] = useState([]);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -19,6 +22,24 @@ function Dashboard() {
                 console.log(response.data);
 
                 setDashboardData(response.data.data);
+
+            })
+            .catch((error) => {
+
+                console.log(error);
+
+            });
+
+    }, []);
+
+    useEffect(() => {
+
+        API.get("/heatmap")
+            .then((response) => {
+
+                console.log(response.data);
+
+                setHeatmapData(response.data.data);
 
             })
             .catch((error) => {
@@ -47,7 +68,7 @@ function Dashboard() {
             <DashboardCards
                 totalCustomers={dashboardData.totalCustomers}
                 totalOrders={dashboardData.totalOrders}
-                pendingOrders={dashboardData.pendingOrders}
+                activeOrders={dashboardData.activeOrders}
                 completedOrders={dashboardData.completedOrders}/>
 
             <RevenueCards
@@ -61,6 +82,13 @@ function Dashboard() {
             <button
                 onClick={() => navigate(`/orders/${order._id}`)}>
                 View Details</button>
+
+            <PendingActions 
+                inquiryOrders={dashboardData.inquiryOrders}
+                pendingPayments={dashboardData.pendingPayments}/>
+
+            <Heatmap
+                heatmapData={heatmapData}/>
 
         </>
     );

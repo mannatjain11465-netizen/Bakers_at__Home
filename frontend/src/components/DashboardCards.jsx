@@ -1,7 +1,7 @@
 function DashboardCards({
     totalCustomers,
     totalOrders,
-    pendingOrders,
+    activeOrders,
     completedOrders
 }) {
 
@@ -27,7 +27,7 @@ function DashboardCards({
 
                 <div>
                     <h3>Active Orders</h3>
-                    <p>{pendingOrders}</p>
+                    <p>{activeOrders}</p>
                 </div>
 
                 <hr />

@@ -102,7 +102,6 @@ return (
         value={status}
         onChange={(e) => setStatus(e.target.value)}>
             <option>Inquiry</option>
-            <option>Discussion</option>
             <option>Confirmed</option>
             <option>In Progress</option>
             <option>Ready</option>

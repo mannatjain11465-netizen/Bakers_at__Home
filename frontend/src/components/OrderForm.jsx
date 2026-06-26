@@ -354,9 +354,6 @@ function OrderForm({
                     <option value="Inquiry">
                         Inquiry
                     </option>
-                    <option value="Discussion">
-                        Discussion
-                    </option>
                     <option value="Confirmed">
                         Confirmed
                     </option>
