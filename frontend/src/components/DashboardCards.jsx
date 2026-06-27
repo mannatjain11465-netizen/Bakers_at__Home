@@ -1,3 +1,10 @@
+import {
+    FiUsers,
+    FiPackage,
+    FiActivity,
+    FiCheckCircle
+} from "react-icons/fi";
+
 function DashboardCards({
     totalCustomers,
     totalOrders,
@@ -5,41 +12,80 @@ function DashboardCards({
     completedOrders
 }) {
 
+    const cards = [
+        {
+            title: "Total Customers",
+            value: totalCustomers,
+            icon: <FiUsers size={24} />
+        },
+        {
+            title: "Total Orders",
+            value: totalOrders,
+            icon: <FiPackage size={24} />
+        },
+        {
+            title: "Active Orders",
+            value: activeOrders,
+            icon: <FiActivity size={24} />
+        },
+        {
+            title: "Completed Orders",
+            value: completedOrders,
+            icon: <FiCheckCircle size={24} />
+        }
+    ];
+
     return (
-        <>
-            <h2>Overview</h2>
 
-            <div>
+        <div className="bg-white rounded-2xl shadow-md p-6">
 
-                <div>
-                    <h3>Total Customers</h3>
-                    <p>{totalCustomers}</p>
-                </div>
+            <h2 className="text-xl font-bold text-gray-800 mb-6">
+                Overview
+            </h2>
 
-                <hr />
+            <div className="grid grid-cols-2 gap-4">
 
-                <div>
-                    <h3>Total Orders</h3>
-                    <p>{totalOrders}</p>
-                </div>
+                {cards.map((card) => (
 
-                <hr />
+                    <div
+                        key={card.title}
+                        className="
+                            border
+                            border-pink-100
+                            rounded-xl
+                            p-4
+                            hover:shadow-md
+                            transition-all
+                            duration-200
+                        "
+                    >
 
-                <div>
-                    <h3>Active Orders</h3>
-                    <p>{activeOrders}</p>
-                </div>
+                        <div className="flex items-center justify-between">
 
-                <hr />
+                            <span className="text-pink-500">
+                                {card.icon}
+                            </span>
 
-                <div>
-                    <h3>Completed Orders</h3>
-                    <p>{completedOrders}</p>
-                </div>
+                            <span className="text-3xl font-bold text-gray-800">
+                                {card.value}
+                            </span>
+
+                        </div>
+
+                        <p className="mt-4 text-sm text-gray-500">
+                            {card.title}
+                        </p>
+
+                    </div>
+
+                ))}
 
             </div>
-        </>
+
+        </div>
+
     );
+
 }
 
 export default DashboardCards;

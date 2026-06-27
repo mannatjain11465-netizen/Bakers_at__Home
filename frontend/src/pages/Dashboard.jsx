@@ -1,18 +1,16 @@
 import { useEffect, useState } from "react";
-import Sidebar from "../components/Sidebar";
+import Layout from "../components/Layout";
 import API from "../services/api";
 import DashboardCards from "../components/DashboardCards";
 import RevenueCards from "../components/RevenueCards";
 import PendingActions from "../components/PendingActions";
 import UpcomingOrders from "../components/UpcomingOrders";
 import Heatmap from "../components/Heatmap";
-import { useNavigate } from "react-router-dom";
 
 function Dashboard() {
 
     const [dashboardData, setDashboardData] = useState(null);
     const [heatmapData, setHeatmapData] = useState([]);
-    const navigate = useNavigate();
 
     useEffect(() => {
 
@@ -51,49 +49,78 @@ function Dashboard() {
     }, []);
 
     if (!dashboardData) {
+
         return (
-            <>
-                <Sidebar />
+
+            <Layout>
+
                 <h2>Loading...</h2>
-            </>
+
+            </Layout>
+
         );
+
     }
 
     return (
-        <>
-            <Sidebar />
 
-            <h1>Dashboard</h1>
+        <Layout>
 
-            <DashboardCards
-                totalCustomers={dashboardData.totalCustomers}
-                totalOrders={dashboardData.totalOrders}
-                activeOrders={dashboardData.activeOrders}
-                completedOrders={dashboardData.completedOrders}/>
+            <div className="mb-8">
+                <h1 className="text-5xl font-bold text-gray-800">
+                    Dashboard
+                </h1>
 
-            <RevenueCards
-                totalRevenue={dashboardData.totalRevenue}
-                revenueReceived={dashboardData.revenueReceived}
-                pendingPayments={dashboardData.pendingPayments}/>
+                <p className="text-gray-500 mt-2">
+                    Welcome back! Here's what's happening in your bakery today.
+                </p>
 
-            <UpcomingOrders
-                orders={dashboardData.upcomingOrders}/>
+            </div>
 
-            <button
-                onClick={() => navigate(`/orders/${order._id}`)}>
-                View Details</button>
+            <div className="grid grid-cols-2 gap-6">
 
-            <PendingActions 
-                inquiryOrders={dashboardData.inquiryOrders}
-                pendingPayments={dashboardData.pendingPayments}
-                todayOrders = {dashboardData.todayOrders}
-                tomorrowOrders={dashboardData.tomorrowOrders}/>
+                <DashboardCards
+                    totalCustomers={dashboardData.totalCustomers}
+                    totalOrders={dashboardData.totalOrders}
+                    activeOrders={dashboardData.activeOrders}
+                    completedOrders={dashboardData.completedOrders}
+                />
 
-            <Heatmap
-                heatmapData={heatmapData}/>
+                <RevenueCards
+                    totalRevenue={dashboardData.totalRevenue}
+                    revenueReceived={dashboardData.revenueReceived}
+                    pendingPayments={dashboardData.pendingPayments}
+                />
 
-        </>
+            </div>
+
+            <div className="grid grid-cols-2 gap-6 mt-6">
+
+                <UpcomingOrders
+                    orders={dashboardData.upcomingOrders}
+                />
+
+                <PendingActions
+                    inquiryOrders={dashboardData.inquiryOrders}
+                    pendingPayments={dashboardData.pendingPayments}
+                    todayOrders={dashboardData.todayOrders}
+                    tomorrowOrders={dashboardData.tomorrowOrders}
+                />
+
+            </div>
+
+            <div className="mt-6">
+
+                <Heatmap
+                    heatmapData={heatmapData}
+                />
+
+            </div>
+
+        </Layout>
+
     );
+
 }
 
 export default Dashboard;

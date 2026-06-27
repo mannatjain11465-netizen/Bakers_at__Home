@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import Sidebar from "../components/Sidebar";
+import Layout from "../components/Layout";
 import API from "../services/api";
 
 function CustomerProfile() {
@@ -44,15 +44,16 @@ function CustomerProfile() {
     if (!customer || !stats) {
         return (
             <>
-                <Sidebar />
+                <Layout>
                 <h2>Loading...</h2>
+                </Layout>
             </>
         );
     }
 
     return (
         <>
-            <Sidebar />
+            <Layout>
 
             <h1>Customer Profile</h1>
 
@@ -142,6 +143,7 @@ function CustomerProfile() {
                     </div>
                 ))
             )}
+            </Layout>
         </>
     );
 }

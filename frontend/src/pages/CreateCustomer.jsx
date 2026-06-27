@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Sidebar from "../components/Sidebar";
+import Layout from "../components/Layout";
 import API from "../services/api";
 import CustomerForm from "../components/CustomerForm";
 import { useNavigate } from "react-router-dom";
@@ -48,7 +48,7 @@ function CreateCustomer() {
 
     return (
         <>
-            <Sidebar />
+            <Layout>
 
             <CustomerForm 
                 formData={formData}
@@ -57,7 +57,7 @@ function CreateCustomer() {
                 heading= "Create Customer"
                 buttonText="Create Customer"
             />
-
+        </Layout>
         </>
     );
 }

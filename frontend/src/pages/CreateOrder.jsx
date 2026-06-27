@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import Sidebar from "../components/Sidebar";
+import Layout from "../components/Layout";
 import OrderForm from "../components/OrderForm";
 import API from "../services/api";
 import { useNavigate, useSearchParams } from "react-router-dom";
@@ -168,7 +168,7 @@ function CreateOrder() {
 
     return (
         <>
-            <Sidebar />
+            <Layout>
 
             <OrderForm 
                 formData={formData}
@@ -181,6 +181,7 @@ function CreateOrder() {
                 heading="Create Order"          
                 buttonText="Create Order"
             />
+        </Layout>
         </>
     );
 }

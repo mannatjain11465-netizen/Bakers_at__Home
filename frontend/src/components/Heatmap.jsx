@@ -1,13 +1,23 @@
 function Heatmap({ heatmapData }) {
 
     if (heatmapData.length === 0) {
+
         return (
-            <>
-                <hr />
-                <h2>Order Activity</h2>
-                <p>No activity found.</p>
-            </>
+
+            <div className="bg-white rounded-2xl shadow-md p-6">
+
+                <h2 className="text-xl font-bold text-gray-800 mb-4">
+                    Order Heatmap
+                </h2>
+
+                <p className="text-gray-500">
+                    No activity found.
+                </p>
+
+            </div>
+
         );
+
     }
 
     const maxOrders = Math.max(
@@ -20,7 +30,7 @@ function Heatmap({ heatmapData }) {
         const alpha =
             0.2 + (orderCount / maxOrders) * 0.8;
 
-        return `rgba(236, 72, 153, ${alpha})`;
+        return `rgba(236,72,153,${alpha})`;
 
     };
 
@@ -63,7 +73,7 @@ function Heatmap({ heatmapData }) {
 
     const months = weeks.map((week) => {
 
-        const firstDay = week.find((day) => day !== null);
+        const firstDay = week.find(day => day !== null);
 
         if (!firstDay) return "";
 
@@ -75,82 +85,84 @@ function Heatmap({ heatmapData }) {
     });
 
     return (
-        <>
-            <hr />
 
-            <h2>Order Heatmap</h2>
+        <div className="bg-white rounded-2xl shadow-md p-6">
 
-            <div
-                style={{
-                    display: "flex",
-                    marginLeft: "43px",
-                    marginBottom: "12px",
-                    gap: "4px"
-                }}
-            >
+            <div className="flex justify-between items-center mb-6">
+
+                <h2 className="text-xl font-bold text-gray-800">
+                    Order Heatmap
+                </h2>
+
+                <p className="text-sm text-gray-500">
+                    Daily Activity
+                </p>
+
+            </div>
+
+            {/* Month Labels */}
+
+            <div className="flex ml-11 mb-3 gap-1">
+
                 {months.map((month, index) => (
 
                     <div
                         key={index}
-                        style={{
-                            width: "16px",
-                            textAlign: "center",
-                            fontSize: "12px",
-                            fontWeight: "bold"
-                        }}
+                        className="
+                            w-4
+                            text-center
+                            text-xs
+                            font-semibold
+                            text-gray-500
+                        "
                     >
                         {
-                            index === 0 || month !== months[index - 1]
+                            index === 0 ||
+                            month !== months[index - 1]
                                 ? month
                                 : ""
                         }
+
                     </div>
 
                 ))}
+
             </div>
 
-            <div
-                style={{
-                    display: "flex",
-                    gap: "8px",
-                    alignItems: "flex-start"
-                }}
-            >
+            <div className="flex gap-3 items-start">
 
-                <div
-                    style={{
-                        display: "flex",
-                        flexDirection: "column",
-                        gap: "4px"
-                    }}
-                >
+                {/* Weekdays */}
+
+                <div className="flex flex-col gap-1">
+
                     {weekdays.map((day) => (
 
                         <div
                             key={day}
-                            style={{
-                                width: "35px",
-                                height: "16px",
-                                fontSize: "12px",
-                                display: "flex",
-                                alignItems: "center"
-                            }}
+                            className="
+                                w-8
+                                h-4
+                                flex
+                                items-center
+                                text-xs
+                                text-gray-500
+                            "
                         >
                             {day}
+
                         </div>
 
                     ))}
+
                 </div>
+
+                {/* Heatmap */}
 
                 {weeks.map((week, weekIndex) => (
 
                     <div
                         key={weekIndex}
-                        style={{
-                            display: "flex",
-                            flexDirection: "column",
-                            gap: "4px"
-                        }}
+                        className="flex flex-col gap-1"
                     >
 
                         {week.map((day, dayIndex) => (
@@ -159,18 +171,31 @@ function Heatmap({ heatmapData }) {
 
                                 <div
                                     key={day.date}
-                                    title={`${new Date(day.date).toLocaleDateString("en-IN", {
-                                        day: "numeric",
-                                        month: "long",
-                                        year: "numeric"
-                                    })}
-                                    ${day.orderCount === 1 ? "1 Order" : `${day.orderCount} Orders`}`}
+                                    title={`${new Date(day.date).toLocaleDateString(
+                                        "en-IN",
+                                        {
+                                            day: "numeric",
+                                            month: "long",
+                                            year: "numeric"
+                                        }
+                                    )} • ${
+                                        day.orderCount === 1
+                                            ? "1 Order"
+                                            : `${day.orderCount} Orders`
+                                    }`}
+                                    className="
+                                        w-4
+                                        h-4
+                                        rounded
+                                        cursor-pointer
+                                        hover:scale-110
+                                        transition-transform
+                                        duration-200
+                                    "
                                     style={{
-                                        width: "16px",
-                                        height: "16px",
-                                        backgroundColor: getColor(day.orderCount),
-                                        borderRadius: "3px",
-                                        cursor: "pointer"
+                                        backgroundColor: getColor(
+                                            day.orderCount
+                                        )
                                     }}
                                 />
 
@@ -178,10 +203,7 @@ function Heatmap({ heatmapData }) {
 
                                 <div
                                     key={dayIndex}
-                                    style={{
-                                        width: "16px",
-                                        height: "16px"
-                                    }}
+                                    className="w-4 h-4"
                                 />
 
                             )
@@ -194,15 +216,9 @@ function Heatmap({ heatmapData }) {
 
             </div>
 
-            <div
-                style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "8px",
-                    marginTop: "16px",
-                    fontSize: "12px"
-                }}
-            >
+            {/* Legend */}
+
+            <div className="flex items-center gap-2 mt-6 text-xs text-gray-500">
 
                 <span>Less</span>
 
@@ -210,10 +226,8 @@ function Heatmap({ heatmapData }) {
 
                     <div
                         key={level}
+                        className="w-4 h-4 rounded"
                         style={{
-                            width: "14px",
-                            height: "14px",
-                            borderRadius: "3px",
                             backgroundColor: getColor(
                                 (level / 4) * maxOrders
                             )
@@ -226,7 +240,8 @@ function Heatmap({ heatmapData }) {
 
             </div>
 
-        </>
+        </div>
+
     );
 
 }

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import Sidebar from "../components/Sidebar";
+import Layout from "../components/Layout";
 import CustomerForm from "../components/CustomerForm";
 import API from "../services/api";
 
@@ -71,15 +71,16 @@ function EditCustomer() {
     if (!formData.name) {
         return (
             <>
-                <Sidebar />
+                <Layout>
                 <h2>Loading...</h2>
+                </Layout>
             </>
         );
     }
 
     return (
         <>
-            <Sidebar />
+            <Layout>
 
             <CustomerForm
                 formData={formData}
@@ -88,6 +89,7 @@ function EditCustomer() {
                 heading="Edit Customer"
                 buttonText="Update Customer"
             />
+        </Layout>
         </>
     );
 

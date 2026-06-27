@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import Sidebar from "../components/Sidebar";
+import Layout from "../components/Layout";
 import ReactCalendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import CalendarOrders from "../components/CalendarOrder";
@@ -38,7 +38,7 @@ function Calendar() {
 
     return (
         <>
-            <Sidebar />
+            <Layout>
 
             <h1>Calendar</h1>
 
@@ -50,7 +50,8 @@ function Calendar() {
             <CalendarOrders
                 selectedOrders={selectedOrders}
                 selectedDate={selectedDate}/>
-
+        </Layout>
+        
         </>
     );
 }

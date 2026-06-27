@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import Sidebar from "../components/Sidebar";
+import Layout from "../components/Layout";
 import API from "../services/api";
 import { useNavigate } from "react-router-dom";
 
@@ -38,7 +38,7 @@ function Customers() {
 
     return (
         <>
-            <Sidebar />
+            <Layout>
 
             <h1>Customers Page</h1>
 
@@ -90,10 +90,11 @@ function Customers() {
 
                     </div>
 
-        ))
-    )
-    }
+                ))
+             )
+            }
 
+        </Layout>
         </>
     );
 }
