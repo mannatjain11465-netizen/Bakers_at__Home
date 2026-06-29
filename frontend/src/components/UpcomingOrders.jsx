@@ -101,6 +101,7 @@ function UpcomingOrders({ orders }) {
                             font-medium
                             transition-all
                             duration-200
+                            cursor-pointer
                         "
                     >
                         Manage Orders

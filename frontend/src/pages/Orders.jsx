@@ -97,6 +97,7 @@ function Orders() {
                         font-semibold
                         shadow-md
                         transition-all
+                        cursor-pointer
                     "
                 >
                     + New Order
@@ -157,6 +158,7 @@ function Orders() {
                             focus:outline-none
                             focus:ring-2
                             focus:ring-pink-300
+                            cursor-pointer
                         "
                     >
                         <option value="All">All Status</option>
@@ -373,6 +375,7 @@ function Orders() {
                                         rounded-xl
                                         font-semibold
                                         transition-all
+                                        cursor-pointer
                                     "
                                 >
                                     View Details

@@ -132,6 +132,7 @@ function SingleOrder() {
                     hover:text-pink-700
                     font-medium
                     mb-6
+                    cursor-pointer
                 "
             >
 
@@ -199,6 +200,7 @@ function SingleOrder() {
                             py-2.5
                             rounded-xl
                             font-semibold
+                            cursor-pointer
                         "
                     >
 
@@ -221,6 +223,7 @@ function SingleOrder() {
                             py-2.5
                             rounded-xl
                             font-semibold
+                            cursor-pointer
                         "
                     >
 
@@ -791,6 +794,7 @@ function SingleOrder() {
                                 rounded-xl
                                 font-semibold
                                 transition-all
+                                cursor-pointer
                             "
                         >
 

@@ -4,15 +4,36 @@ function Heatmap({ heatmapData }) {
 
         return (
 
-            <div className="bg-white rounded-2xl shadow-md p-6">
+            <div
+                className="
+                    bg-white
+                    rounded-3xl
+                    border
+                    border-pink-100
+                    shadow-md
+                    p-8
+                "
+            >
 
-                <h2 className="text-xl font-bold text-gray-800 mb-4">
+                <h2 className="text-2xl font-bold text-slate-800 mb-3">
                     Order Heatmap
                 </h2>
 
-                <p className="text-gray-500">
-                    No activity found.
-                </p>
+                <div className="text-center py-10">
+
+                    <p className="text-5xl mb-4">
+                        📅
+                    </p>
+
+                    <h3 className="text-lg font-semibold text-slate-700">
+                        No Order Activity
+                    </h3>
+
+                    <p className="text-gray-500 mt-2">
+                        Create your first order to start building your bakery heatmap.
+                    </p>
+
+                </div>
 
             </div>
 
@@ -86,23 +107,48 @@ function Heatmap({ heatmapData }) {
 
     return (
 
-        <div className="bg-white rounded-2xl shadow-md p-6">
+        <div
+            className="
+                bg-white
+                rounded-3xl
+                border
+                border-pink-100
+                shadow-md
+                p-8
+            "
+        >
 
-            <div className="flex justify-between items-center mb-6">
+            <div className="flex justify-between items-start mb-8">
 
-                <h2 className="text-xl font-bold text-gray-800">
-                    Order Heatmap
-                </h2>
+                <div>
 
-                <p className="text-sm text-gray-500">
+                    <h2 className="text-2xl font-bold text-slate-800">
+                        Order Heatmap
+                    </h2>
+
+                    <p className="text-sm text-gray-500 leading-relaxed mt-2">
+                        Track bakery workload across the year.
+                    </p>
+
+                </div>
+
+                                <p
+                    className="
+                        bg-pink-100
+                        text-pink-700
+                        text-sm
+                        font-semibold
+                        px-4
+                        py-2
+                        rounded-full
+                    "
+                >
                     Daily Activity
                 </p>
 
             </div>
 
-            {/* Month Labels */}
-
-            <div className="flex ml-11 mb-3 gap-1">
+            <div className="flex ml-11 mb-4 gap-1">
 
                 {months.map((month, index) => (
 
@@ -111,9 +157,10 @@ function Heatmap({ heatmapData }) {
                         className="
                             w-4
                             text-center
-                            text-xs
+                            text-[10px]
                             font-semibold
-                            text-gray-500
+                            tracking-wide
+                            text-gray-400
                         "
                     >
                         {
@@ -129,9 +176,7 @@ function Heatmap({ heatmapData }) {
 
             </div>
 
-            <div className="flex gap-3 items-start">
-
-                {/* Weekdays */}
+            <div className="flex gap-5 items-start">
 
                 <div className="flex flex-col gap-1">
 
@@ -145,7 +190,7 @@ function Heatmap({ heatmapData }) {
                                 flex
                                 items-center
                                 text-xs
-                                text-gray-500
+                                text-gray-400
                             "
                         >
                             {day}
@@ -155,8 +200,6 @@ function Heatmap({ heatmapData }) {
                     ))}
 
                 </div>
-
-                {/* Heatmap */}
 
                 {weeks.map((week, weekIndex) => (
 
@@ -186,10 +229,13 @@ function Heatmap({ heatmapData }) {
                                     className="
                                         w-4
                                         h-4
-                                        rounded
+                                        rounded-md
                                         cursor-pointer
                                         hover:scale-110
-                                        transition-transform
+                                        hover:shadow-md
+                                        hover:ring-2
+                                        hover:ring-pink-200
+                                        transition-all
                                         duration-200
                                     "
                                     style={{
@@ -216,17 +262,28 @@ function Heatmap({ heatmapData }) {
 
             </div>
 
-            {/* Legend */}
+                        <div
+                className="
+                    flex
+                    items-center
+                    gap-2
+                    mt-8
+                    text-xs
+                    text-gray-500
+                "
+            >
 
-            <div className="flex items-center gap-2 mt-6 text-xs text-gray-500">
-
-                <span>Less</span>
+                <span>Less Activity</span>
 
                 {[0, 1, 2, 3, 4].map((level) => (
 
                     <div
                         key={level}
-                        className="w-4 h-4 rounded"
+                        className="
+                            w-5
+                            h-5
+                            rounded-md
+                        "
                         style={{
                             backgroundColor: getColor(
                                 (level / 4) * maxOrders
@@ -236,7 +293,7 @@ function Heatmap({ heatmapData }) {
 
                 ))}
 
-                <span>More</span>
+                <span>More Activity</span>
 
             </div>
 
