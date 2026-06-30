@@ -8,8 +8,7 @@ const createOrder = async (req, res) => {
             data: order,
         });
     } catch (error) {
-        console.log("CREATE ORDER ERROR:");
-        console.log(error);
+        console.error("CREATE ORDER ERROR:",error);
         res.status(500).json({
             success: false,
             message: error.message,
@@ -25,8 +24,7 @@ const getAllOrders = async (req, res) => {
             data: orders,
         });
     } catch (error) {
-        console.log("GET ALL ORDERS ERROR:");
-        console.log(error);
+        console.error("GET ALL ORDERS ERROR:",error);
         res.status(500).json({
             success: false,
             message: error.message,
@@ -48,8 +46,7 @@ const getOrderById = async (req, res) => {
             data: order,
         });
     } catch (error) {
-        console.log("GET ORDER BY ID ERROR:");
-        console.log(error);
+        console.error("GET ORDER BY ID ERROR:",error);
         res.status(500).json({
             success: false,
             message: error.message,
@@ -74,8 +71,7 @@ const updateOrder = async (req, res) => {
             data: order,
         });
     } catch (error) {
-        console.log("UPDATE ORDER ERROR:");
-        console.log(error);
+        console.error("UPDATE ORDER ERROR:",error);
         res.status(500).json({
             success: false,
             message: error.message,
@@ -129,8 +125,7 @@ const deleteOrder = async (req, res) => {
             data: order,
         });
     } catch (error) {
-        console.log("DELETE ORDER ERROR:");
-        console.log(error);
+        console.error("DELETE ORDER ERROR:",error);
         res.status(500).json({
             success: false,
             message: error.message,

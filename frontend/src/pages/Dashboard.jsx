@@ -17,14 +17,12 @@ function Dashboard() {
         API.get("/dashboard")
             .then((response) => {
 
-                console.log(response.data);
-
                 setDashboardData(response.data.data);
 
             })
             .catch((error) => {
 
-                console.log(error);
+                alert("Failed to load dashboard");
 
             });
 
@@ -35,14 +33,12 @@ function Dashboard() {
         API.get("/heatmap")
             .then((response) => {
 
-                console.log(response.data);
-
                 setHeatmapData(response.data.data);
 
             })
             .catch((error) => {
 
-                console.log(error);
+                alert("Failed to load heatmap");
 
             });
 

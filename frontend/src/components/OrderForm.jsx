@@ -6,6 +6,7 @@ import {
     FiDollarSign,
     FiFileText
 } from "react-icons/fi";
+import { Navigate, useNavigate } from "react-router-dom";
 
 function OrderForm({
     formData,
@@ -18,6 +19,7 @@ function OrderForm({
     heading,
     buttonText,
 }) {
+    const navigate=useNavigate();
 
     const inputStyle = `
         w-full
@@ -86,7 +88,7 @@ function OrderForm({
                             name="customer"
                             value={formData.customer}
                             onChange={handleChange}
-                            className={inputStyle}
+                            className={`${inputStyle} cursor-pointer`}
                         >
 
                             <option value="">
@@ -183,7 +185,7 @@ function OrderForm({
                                     name="gender"
                                     value={formData.celebrant.gender}
                                     onChange={handleCelebrantChange}
-                                    className={inputStyle}
+                                    className={`${inputStyle} cursor-pointer`}
                                 >
 
                                     <option value="">
@@ -284,7 +286,7 @@ function OrderForm({
                             name="orderType"
                             value={formData.orderType}
                             onChange={handleChange}
-                            className={inputStyle}
+                            className={`${inputStyle} cursor-pointer`}
                         >
 
                             <option value="Pickup">
@@ -310,7 +312,7 @@ function OrderForm({
                                         name="deliveryAddressType"
                                         value={formData.deliveryAddressType}
                                         onChange={handleChange}
-                                        className={inputStyle}
+                                        className={`${inputStyle} cursor-pointer`}
                                     >
 
                                         <option value="Home">
@@ -432,7 +434,7 @@ function OrderForm({
                                     name="unit"
                                     value={formData.items[0].unit}
                                     onChange={handleItemChange}
-                                    className={inputStyle}
+                                    className={`${inputStyle} cursor-pointer`}
                                 >
 
                                     <option value="">
@@ -466,7 +468,7 @@ function OrderForm({
                             <div>
 
                                 <label className="block mb-2 font-medium text-gray-700">
-                                    Weight
+                                    Weight (in kg)
                                 </label>
 
                                 <input
@@ -500,7 +502,7 @@ function OrderForm({
                         </div>
 
                         <label className="block mt-6 mb-2 font-medium text-gray-700">
-                            Unit Price
+                            Unit Price (in ₹)
                         </label>
 
                         <input
@@ -590,7 +592,7 @@ function OrderForm({
                                     name="paymentMethod"
                                     value={formData.payment.paymentMethod}
                                     onChange={handlePaymentChange}
-                                    className={inputStyle}
+                                    className={`${inputStyle} cursor-pointer`}
                                 >
 
                                     <option value="Cash">
@@ -615,7 +617,7 @@ function OrderForm({
                                     name="paymentStatus"
                                     value={formData.payment.paymentStatus}
                                     onChange={handlePaymentChange}
-                                    className={inputStyle}
+                                    className={`${inputStyle} cursor-pointer`}
                                 >
 
                                     <option value="Pending">
@@ -670,7 +672,7 @@ function OrderForm({
                             name="status"
                             value={formData.status}
                             onChange={handleChange}
-                            className={inputStyle}
+                            className={`${inputStyle} cursor-pointer`}
                         >
 
                             <option value="Inquiry">
@@ -727,6 +729,7 @@ function OrderForm({
                             transition-all
                             cursor-pointer
                         "
+                        onClick={() => navigate("/orders")}
                     >
                         Cancel
                     </button>

@@ -28,7 +28,7 @@ function Orders() {
                 setOrders(response.data.data);
             })
             .catch((error) => {
-                console.log(error);
+                alert("Failed to load orders");
             });
 
     }, []);

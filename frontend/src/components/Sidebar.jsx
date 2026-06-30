@@ -49,8 +49,6 @@ function Sidebar() {
             "
         >
 
-            {/* Logo */}
-
             <div className="py-8 flex justify-center border-b border-pink-100">
 
                 <img
@@ -60,8 +58,6 @@ function Sidebar() {
                 />
 
             </div>
-
-            {/* Navigation */}
 
             <div className="px-4 py-6">
 

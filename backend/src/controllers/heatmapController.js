@@ -34,7 +34,6 @@ const getHeatmapData = async (req, res) => {
             });
         }
 
-        // Count orders for each date
         const heatmap = {};
 
         orders.forEach((order) => {
@@ -49,15 +48,14 @@ const getHeatmapData = async (req, res) => {
 
         });
 
-        // First order date
         const firstDate = new Date(orders[0].deliveryDate);
         firstDate.setHours(0, 0, 0, 0);
 
-        // Today
+  
         const today = new Date();
         today.setHours(0, 0, 0, 0);
 
-        // Generate complete timeline
+  
         const heatmapData = [];
 
         const currentDate = new Date(firstDate);

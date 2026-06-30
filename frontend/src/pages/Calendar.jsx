@@ -17,14 +17,12 @@ function Calendar() {
         API.get("/calendar")
             .then((response) => {
 
-                console.log(response.data);
-
                 setOrders(response.data.orders);
 
             })
             .catch((error) => {
 
-                console.log(error);
+                alert("Failed to load calendar.");
 
             });
 

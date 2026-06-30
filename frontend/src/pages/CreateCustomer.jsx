@@ -30,8 +30,6 @@ function CreateCustomer() {
         API.post("/customers", formData)
             .then((response) => {
 
-            console.log(response.data);
-
             alert("Customer created successfully!");
 
 
@@ -40,7 +38,7 @@ function CreateCustomer() {
         })
             .catch((error) => {
 
-                console.log("Failed to create customer.");
+                alert("Failed to create customer.");
 
         });
 

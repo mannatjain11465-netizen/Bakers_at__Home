@@ -31,7 +31,7 @@ function Customers() {
             })
             .catch((error) => {
 
-                console.log(error);
+                alert("Failed to load customers.")
 
             });
 

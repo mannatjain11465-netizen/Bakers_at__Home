@@ -71,7 +71,7 @@ function CreateOrder() {
                 setCustomers(response.data.data);
             })
             .catch((error) => {
-                console.log(error);
+                alert("Failed to load customers.");
             });
     }, []);
 
@@ -161,8 +161,7 @@ function CreateOrder() {
             navigate(`/orders/${response.data.data._id}`);
         }
         catch(error){
-            console.log(error.response.data);
-            alert(error.response.data.message);
+            alert(error.response?.data?.message || "Failed to create order.");
         }
     };
 

@@ -31,7 +31,9 @@ function CustomerProfile() {
                 setStats(response.data.stats);
                 setOrders(response.data.orders);
             })
-            .catch((error) => console.log(error));
+            .catch((error) => 
+                alert("Failed to load customer profile.")    
+            );
     }, [customerId]);
 
     const handleDelete = async () => {
@@ -50,8 +52,7 @@ function CustomerProfile() {
 
             navigate("/customers");
         } catch (error) {
-            console.log(error);
-
+            
             alert(
                 error.response?.data?.message ||
                     "Failed to delete customer."

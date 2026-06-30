@@ -19,7 +19,7 @@ function EditOrder(){
                 setFormData(orderResponse.data.data);
             }
             catch(error){
-                console.log(error);
+                alert("Failed to load the order");
             }
         };
         fetchData();
@@ -106,7 +106,6 @@ function EditOrder(){
             navigate(`/orders/${orderId}`);
         }
         catch(error){
-            console.log(error.response?.data || error);
             alert("Failed to update Order");
         }
     };

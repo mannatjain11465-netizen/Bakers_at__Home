@@ -25,16 +25,14 @@ function EditCustomer() {
         API.get(`/customers/${customerId}`)
             .then((response) => {
 
-                console.log(response.data);
-
                 setFormData(response.data.data);
                 setLoading(false);
 
             })
             .catch((error) => {
 
-                console.log(error);
                 setLoading(false);
+                alert("Failed to load customer details.");
 
             });
 
@@ -56,16 +54,12 @@ function EditCustomer() {
         API.put(`/customers/${customerId}`, formData)
             .then((response) => {
 
-                console.log(response.data);
-
                 alert("Customer updated successfully!");
 
                 navigate(`/customers/${customerId}`);
 
             })
             .catch((error) => {
-
-                console.log(error);
 
                 alert(
                     error.response?.data?.message ||
@@ -119,6 +113,7 @@ function EditCustomer() {
                         font-medium
                         mb-6
                         transition-colors
+                        cursor-pointer
                     "
                 >
                     <FiArrowLeft className="text-lg" />

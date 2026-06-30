@@ -37,8 +37,6 @@ function SingleOrder() {
 
             .catch((error) => {
 
-                console.log(error);
-
                 alert("Failed to update status.");
 
             });
@@ -65,8 +63,6 @@ function SingleOrder() {
 
         catch (error) {
 
-            console.log(error);
-
             alert("Failed to delete order.");
 
         }
@@ -87,7 +83,7 @@ function SingleOrder() {
 
             .catch((error) => {
 
-                console.log(error);
+                alert("Failed to load the order");
 
             });
 
