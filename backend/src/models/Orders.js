@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
 const orderSchema = new mongoose.Schema(
 {
@@ -15,7 +15,7 @@ const orderSchema = new mongoose.Schema(
 
   celebrant: {
     name: String,
-     relation: String,
+    relation: String,
     gender: String,
     age: Number,
   },
@@ -87,12 +87,12 @@ const orderSchema = new mongoose.Schema(
       required: true,
     },
 
-  paymentMethod: {
+    paymentMethod: {
       type: String,
       enum: ["Cash", "Google Pay"],
-      default: "Cash"
+      default: "Cash",
     },
-  
+
     paymentStatus: {
       type: String,
       enum: ["Pending", "Partially Paid", "Paid"],
@@ -132,4 +132,6 @@ const orderSchema = new mongoose.Schema(
 }
 );
 
-module.exports = mongoose.model("Order", orderSchema);
+const Order = mongoose.model("Order", orderSchema);
+
+export default Order;

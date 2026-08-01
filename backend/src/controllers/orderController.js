@@ -1,15 +1,17 @@
-const Order = require("../models/Orders");
+import Order from "../models/Orders.js";
 
 const createOrder = async (req, res) => {
     try {
         const order = await Order.create(req.body);
-        res.status(201).json({
+
+        return res.status(201).json({
             success: true,
             data: order,
         });
     } catch (error) {
-        console.error("CREATE ORDER ERROR:",error);
-        res.status(500).json({
+        console.error("CREATE ORDER ERROR:", error);
+
+        return res.status(500).json({
             success: false,
             message: error.message,
         });
@@ -18,14 +20,18 @@ const createOrder = async (req, res) => {
 
 const getAllOrders = async (req, res) => {
     try {
-        const orders = await Order.find().populate("customer").sort({ createdAt: -1 });
-        res.status(200).json({
+        const orders = await Order.find()
+            .populate("customer")
+            .sort({ createdAt: -1 });
+
+        return res.status(200).json({
             success: true,
             data: orders,
         });
     } catch (error) {
-        console.error("GET ALL ORDERS ERROR:",error);
-        res.status(500).json({
+        console.error("GET ALL ORDERS ERROR:", error);
+
+        return res.status(500).json({
             success: false,
             message: error.message,
         });
@@ -35,19 +41,23 @@ const getAllOrders = async (req, res) => {
 const getOrderById = async (req, res) => {
     try {
         const order = await Order.findById(req.params.id);
+
         if (!order) {
             return res.status(404).json({
                 success: false,
                 message: "Order not found",
             });
         }
-        res.status(200).json({
+
+        return res.status(200).json({
             success: true,
             data: order,
         });
+
     } catch (error) {
-        console.error("GET ORDER BY ID ERROR:",error);
-        res.status(500).json({
+        console.error("GET ORDER BY ID ERROR:", error);
+
+        return res.status(500).json({
             success: false,
             message: error.message,
         });
@@ -56,23 +66,31 @@ const getOrderById = async (req, res) => {
 
 const updateOrder = async (req, res) => {
     try {
-        const order = await Order.findByIdAndUpdate(req.params.id, req.body, {
-            new: true,
-            runValidators: true,
-        });
+        const order = await Order.findByIdAndUpdate(
+            req.params.id,
+            req.body,
+            {
+                new: true,
+                runValidators: true,
+            }
+        );
+
         if (!order) {
             return res.status(404).json({
-            success: false,
-            message: "Order not found",
+                success: false,
+                message: "Order not found",
             });
         }
-        res.status(200).json({
+
+        return res.status(200).json({
             success: true,
             data: order,
         });
+
     } catch (error) {
-        console.error("UPDATE ORDER ERROR:",error);
-        res.status(500).json({
+        console.error("UPDATE ORDER ERROR:", error);
+
+        return res.status(500).json({
             success: false,
             message: error.message,
         });
@@ -84,29 +102,32 @@ const updateOrderStatus = async (req, res) => {
         const order = await Order.findByIdAndUpdate(
             req.params.id,
             {
-                status : req.body.status
+                status: req.body.status,
             },
-
             {
-                new : true,
-                runValidators : true
+                new: true,
+                runValidators: true,
             }
         );
-        if(!order){
+
+        if (!order) {
             return res.status(404).json({
                 success: false,
-                message: "Order not found"
+                message: "Order not found",
             });
         }
-        res.status(200).json({
+
+        return res.status(200).json({
             success: true,
-            data: order
+            data: order,
         });
-    }
-    catch{
-        res.status(500).json({
+
+    } catch (error) {
+        console.error("UPDATE ORDER STATUS ERROR:", error);
+
+        return res.status(500).json({
             success: false,
-            message: error.message
+            message: error.message,
         });
     }
 };
@@ -114,26 +135,30 @@ const updateOrderStatus = async (req, res) => {
 const deleteOrder = async (req, res) => {
     try {
         const order = await Order.findByIdAndDelete(req.params.id);
+
         if (!order) {
             return res.status(404).json({
                 success: false,
                 message: "Order not found",
             });
         }
-        res.status(200).json({
+
+        return res.status(200).json({
             success: true,
             data: order,
         });
+
     } catch (error) {
-        console.error("DELETE ORDER ERROR:",error);
-        res.status(500).json({
+        console.error("DELETE ORDER ERROR:", error);
+
+        return res.status(500).json({
             success: false,
             message: error.message,
         });
     }
 };
 
-module.exports = {
+export {
     createOrder,
     getAllOrders,
     getOrderById,

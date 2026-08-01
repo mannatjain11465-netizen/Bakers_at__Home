@@ -1,13 +1,16 @@
-const express = require("express");
-require("dotenv").config();
-const cors = require("cors");
+import express from "express";
+import dotenv from "dotenv";
+import cors from "cors";
 
-const customerRoutes = require("./routes/customerRoutes");
-const orderRoutes = require("./routes/orderRoutes");
-const dashboardRoutes = require("./routes/dashboardRoutes");
-const calendarRoutes = require("./routes/calendarRoutes");
-const heatmapRoutes = require("./routes/heatmapRoutes");
-const connectDB = require("./config/db");
+import customerRoutes from "./routes/customerRoutes.js";
+import orderRoutes from "./routes/orderRoutes.js";
+import dashboardRoutes from "./routes/dashboardRoutes.js";
+import calendarRoutes from "./routes/calendarRoutes.js";
+import heatmapRoutes from "./routes/heatmapRoutes.js";
+import authRoutes from "./routes/authRoutes.js";
+import connectDB from "./config/db.js";
+
+dotenv.config();
 
 const app = express();
 
@@ -21,13 +24,14 @@ app.use("/api/orders", orderRoutes);
 app.use("/api/dashboard", dashboardRoutes);
 app.use("/api/calendar", calendarRoutes);
 app.use("/api/heatmap", heatmapRoutes);
+app.use("/api/auth", authRoutes);
 
 app.get("/", (req, res) => {
-  res.send("Bakers_at_Home API Running");
+    res.send("Bakers_at_Home API Running");
 });
 
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+    console.log(`Server running on port ${PORT}`);
 });

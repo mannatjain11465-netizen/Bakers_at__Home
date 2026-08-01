@@ -1,8 +1,8 @@
-const express = require("express");
+import express from "express";
+import { getHeatmapData } from "../controllers/heatmapController.js";
 
 const router = express.Router();
-const {getHeatmapData} = require("../controllers/heatmapController");
 
 router.get("/", getHeatmapData);
 
-module.exports = router;
+export default router;

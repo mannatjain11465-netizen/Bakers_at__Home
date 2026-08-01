@@ -1,37 +1,39 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
 const customerSchema = new mongoose.Schema(
-  {
-    name: {
-      type: String,
-      required: true,
-      trim: true,
-    },
+    {
+        name: {
+            type: String,
+            required: true,
+            trim: true,
+        },
 
-    phone: {
-      type: String,
-      required: true,
-      unique: true,
-    },
+        phone: {
+            type: String,
+            required: true,
+            unique: true,
+        },
 
-    building: {
-      type: String,
-      default: "",
-    },
+        building: {
+            type: String,
+            default: "",
+        },
 
-    flatNumber: {
-      type: String,
-      default: "",
-    },
+        flatNumber: {
+            type: String,
+            default: "",
+        },
 
-    notes: {
-      type: String,
-      default: "",
+        notes: {
+            type: String,
+            default: "",
+        },
     },
-  },
-  {
-    timestamps: true,
-  }
+    {
+        timestamps: true,
+    }
 );
 
-module.exports = mongoose.model("Customer", customerSchema);
+const Customer = mongoose.model("Customer", customerSchema);
+
+export default Customer;
