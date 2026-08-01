@@ -3,7 +3,6 @@
 ## 🚀 Overview
 
 Bakers_at__Home is a full-stack **MERN Bakery Operations Platform** designed for home bakery owners to manage customers, orders, payments, deliveries, and daily workload from a single dashboard.
-
 Instead of maintaining notebooks or spreadsheets, the platform provides an organized digital solution for tracking bakery operations in real time.
 
 ![React](https://img.shields.io/badge/React-19-61DAFB?logo=react)
