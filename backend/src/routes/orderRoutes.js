@@ -1,3 +1,4 @@
+import { protect, authorize } from "../middleware/authMiddleware.js";
 import express from "express";
 import {
     createOrder,
@@ -10,11 +11,11 @@ import {
 
 const router = express.Router();
 
-router.post("/", createOrder);
-router.get("/", getAllOrders);
-router.get("/:id", getOrderById);
-router.put("/:id", updateOrder);
-router.put("/:id/status", updateOrderStatus);
-router.delete("/:id", deleteOrder);
+router.post("/",protect, authorize("owner", "employee"), createOrder);
+router.get("/", protect, authorize("owner", "employee"), getAllOrders);
+router.get("/:id", protect, authorize("owner", "employee"), getOrderById);
+router.put("/:id", protect, authorize("owner"), updateOrder);
+router.put("/:id/status", protect, authorize("owner"), updateOrderStatus);
+router.delete("/:id", protect, authorize("owner"), deleteOrder);
 
 export default router;

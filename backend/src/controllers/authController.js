@@ -15,8 +15,6 @@
     };
 
     export const register = async (req, res) => {
-        console.log(req.headers);
-        console.log(req.body);
         try {
             const { name, email, password, phone } = req.body;
 
@@ -50,9 +48,10 @@
                 },
             });
         } catch (error) {
+            console.error(error);
             return res.status(500).json({
                 success: false,
-                message: error.message,
+                message: error.message
             });
         }
     };
@@ -96,5 +95,29 @@
     };
 
     export const getMe = async (req, res) => {
-
+        try{
+            const user = await User.findById(req.user.id);
+            if(!user){
+                return res.status(404).json({
+                    success: false,
+                    message: "User not found",
+                });
+            }
+        return res.status(200).json({
+            success: true,
+            user: {
+                id: user._id,
+                name: user.name,
+                email: user.email,
+                phone: user.phone,
+                role: user.role,
+            },
+        });
+    }
+    catch (error) {
+            return res.status(500).json({
+                success: false,
+                message: error.message,
+            });
+        }
     };
