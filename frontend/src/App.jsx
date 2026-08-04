@@ -1,6 +1,9 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Register from "./pages/Register";
+
+import ProtectedRoute from "./components/ProtectedRoute";
+
 import Login from "./pages/Login";
+import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
 import Customers from "./pages/Customers";
 import Orders from "./pages/Orders";
@@ -11,38 +14,115 @@ import SingleOrder from "./pages/SingleOrder";
 import EditOrder from "./pages/EditOrder";
 import CustomerProfile from "./pages/CustomerProfile";
 import EditCustomer from "./pages/EditCustomer";
+
 function App() {
-  return (
-    <BrowserRouter>
-      <Routes>
+    return (
+        <BrowserRouter>
 
-        <Route path="/login" element={<Login />} />
+            <Routes>
 
-        <Route path="/register" element={<Register />} />
+                {/* Public Routes */}
 
-        <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="/login" element={<Login />} />
 
-        <Route path="/customers" element={<Customers />} />
+                <Route path="/register" element={<Register />} />
 
-        <Route path="/orders" element={<Orders />} />
+                {/* Protected Routes */}
 
-        <Route path="/calendar" element={<Calendar />} />
+                <Route
+                    path="/dashboard"
+                    element={
+                        <ProtectedRoute>
+                            <Dashboard />
+                        </ProtectedRoute>
+                    }
+                />
 
-        <Route path="/create-order" element={<CreateOrder />} />
+                <Route
+                    path="/customers"
+                    element={
+                        <ProtectedRoute>
+                            <Customers />
+                        </ProtectedRoute>
+                    }
+                />
 
-        <Route path="/create-customer" element={<CreateCustomer />} />
+                <Route
+                    path="/orders"
+                    element={
+                        <ProtectedRoute>
+                            <Orders />
+                        </ProtectedRoute>
+                    }
+                />
 
-        <Route path="/orders/:orderId" element={<SingleOrder />} />
+                <Route
+                    path="/calendar"
+                    element={
+                        <ProtectedRoute>
+                            <Calendar />
+                        </ProtectedRoute>
+                    }
+                />
 
-        <Route path= "/orders/:orderId/edit" element={<EditOrder/>}/>
+                <Route
+                    path="/create-order"
+                    element={
+                        <ProtectedRoute>
+                            <CreateOrder />
+                        </ProtectedRoute>
+                    }
+                />
 
-        <Route path= "/customers/:customerId" element={<CustomerProfile/>}/>
+                <Route
+                    path="/create-customer"
+                    element={
+                        <ProtectedRoute>
+                            <CreateCustomer />
+                        </ProtectedRoute>
+                    }
+                />
 
-        <Route path="/customers/:customerId/edit" element={<EditCustomer />}/>
+                <Route
+                    path="/orders/:orderId"
+                    element={
+                        <ProtectedRoute>
+                            <SingleOrder />
+                        </ProtectedRoute>
+                    }
+                />
 
-      </Routes>
-    </BrowserRouter>
-  );
+                <Route
+                    path="/orders/:orderId/edit"
+                    element={
+                        <ProtectedRoute>
+                            <EditOrder />
+                        </ProtectedRoute>
+                    }
+                />
+
+                <Route
+                    path="/customers/:customerId"
+                    element={
+                        <ProtectedRoute>
+                            <CustomerProfile />
+                        </ProtectedRoute>
+                    }
+                />
+
+                <Route
+                    path="/customers/:customerId/edit"
+                    element={
+                        <ProtectedRoute>
+                            <EditCustomer />
+                        </ProtectedRoute>
+                    }
+                />
+
+            </Routes>
+
+        </BrowserRouter>
+    );
 }
 
 export default App;
