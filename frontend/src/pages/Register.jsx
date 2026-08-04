@@ -1,18 +1,31 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { FaEnvelope, FaLock, FaEye, FaEyeSlash } from "react-icons/fa";
+import {
+    FaUser,
+    FaEnvelope,
+    FaPhone,
+    FaLock,
+    FaEye,
+    FaEyeSlash,
+} from "react-icons/fa";
 import API from "../services/api";
 import "../styles/auth.css";
 
-function Login() {
+function Register() {
+
+    const navigate = useNavigate();
+
+    const [name, setName] = useState("");
     const [email, setEmail] = useState("");
+    const [phone, setPhone] = useState("");
     const [password, setPassword] = useState("");
+
     const [showPassword, setShowPassword] = useState(false);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
-    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
+
         e.preventDefault();
 
         setLoading(true);
@@ -20,24 +33,35 @@ function Login() {
 
         try {
 
-            const response = await API.post("/auth/login", {
+            const response = await API.post("/auth/register", {
+                name,
                 email,
+                phone,
                 password,
             });
+
             localStorage.setItem("token", response.data.token);
+
             localStorage.setItem(
                 "user",
                 JSON.stringify(response.data.user)
             );
+
             navigate("/dashboard");
+
         } catch (error) {
+
             setError(
                 error.response?.data?.message ||
-                "Something went wrong. Please try again."
+                "Registration failed"
             );
+
         } finally {
+
             setLoading(false);
+
         }
+
     };
 
     return (
@@ -52,16 +76,36 @@ function Login() {
                     <p>Homemade with Love ❤️</p>
 
                     <h2 className="auth-title">
-                        Welcome Back
+                        Create Account
                     </h2>
 
                     <p className="auth-subtitle">
-                        Login to manage your bakery
+                        Join and start managing your bakery
                     </p>
 
                 </div>
 
                 <form onSubmit={handleSubmit}>
+
+                    <div className="form-group">
+
+                        <label>Name</label>
+
+                        <div className="input-box">
+
+                            <FaUser />
+
+                            <input
+                                type="text"
+                                placeholder="Enter your name"
+                                value={name}
+                                onChange={(e) => setName(e.target.value)}
+                                required
+                            />
+
+                        </div>
+
+                    </div>
 
                     <div className="form-group">
 
@@ -85,6 +129,26 @@ function Login() {
 
                     <div className="form-group">
 
+                        <label>Phone Number</label>
+
+                        <div className="input-box">
+
+                            <FaPhone />
+
+                            <input
+                                type="tel"
+                                placeholder="Enter phone number"
+                                value={phone}
+                                onChange={(e) => setPhone(e.target.value)}
+                                required
+                            />
+
+                        </div>
+
+                    </div>
+
+                    <div className="form-group">
+
                         <label>Password</label>
 
                         <div className="input-box">
@@ -93,7 +157,7 @@ function Login() {
 
                             <input
                                 type={showPassword ? "text" : "password"}
-                                placeholder="Enter your password"
+                                placeholder="Enter password"
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
                                 required
@@ -101,49 +165,37 @@ function Login() {
 
                             <button
                                 type="button"
-                                onClick={() =>
-                                    setShowPassword(!showPassword)
-                                }
+                                onClick={() => setShowPassword(!showPassword)}
                             >
-                                {
-                                    showPassword
-                                        ? <FaEyeSlash />
-                                        : <FaEye />
-                                }
+                                {showPassword ? <FaEyeSlash /> : <FaEye />}
                             </button>
 
                         </div>
 
                     </div>
 
-                    {
-                        error && (
-                            <p className="auth-error">
-                                {error}
-                            </p>
-                        )
-                    }
+                    {error && (
+                        <p className="auth-error">
+                            {error}
+                        </p>
+                    )}
 
                     <button
                         type="submit"
                         disabled={loading}
                         className="auth-btn"
                     >
-                        {
-                            loading
-                                ? "Logging in..."
-                                : "Login"
-                        }
+                        {loading ? "Creating Account..." : "Register"}
                     </button>
 
                 </form>
 
                 <p className="auth-footer">
 
-                    Don't have an account?{" "}
+                    Already have an account?{" "}
 
-                    <Link to="/register">
-                        Register
+                    <Link to="/login">
+                        Login
                     </Link>
 
                 </p>
@@ -154,4 +206,4 @@ function Login() {
     );
 }
 
-export default Login;
+export default Register;
