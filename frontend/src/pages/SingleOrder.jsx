@@ -23,6 +23,9 @@ function SingleOrder() {
     const { orderId } = useParams();
     const navigate = useNavigate();
 
+    const user = JSON.parse(localStorage.getItem("user"));
+    const isOwner = user && user.role === "owner";
+
     const handleStatusUpdate = () => {
 
         API.put(`/orders/${orderId}/status`, { status })
@@ -181,53 +184,57 @@ function SingleOrder() {
 
                     </span>
 
-                    <button
-                        onClick={() =>
-                            navigate(`/orders/${orderId}/edit`)
-                        }
-                        className="
-                            flex
-                            items-center
-                            gap-2
-                            bg-pink-600
-                            hover:bg-pink-700
-                            text-white
-                            px-5
-                            py-2.5
-                            rounded-xl
-                            font-semibold
-                            cursor-pointer
-                        "
-                    >
+                    isOwner && (
+                        <button
+                            onClick={() =>
+                                navigate(`/orders/${orderId}/edit`)
+                            }
+                            className="
+                                flex
+                                items-center
+                                gap-2
+                                bg-pink-600
+                                hover:bg-pink-700
+                                text-white
+                                px-5
+                                py-2.5
+                                rounded-xl
+                                font-semibold
+                                cursor-pointer
+                            "
+                        >
 
-                        <FiEdit />
+                            <FiEdit />
 
-                        Edit
+                            Edit
 
-                    </button>
+                        </button>
+                    )
 
-                    <button
-                        onClick={handleDelete}
-                        className="
-                            flex
-                            items-center
-                            gap-2
-                            bg-red-500
-                            hover:bg-red-600
-                            text-white
-                            px-5
-                            py-2.5
-                            rounded-xl
-                            font-semibold
-                            cursor-pointer
-                        "
-                    >
+                    isOwner && (
+                        <button
+                            onClick={handleDelete}
+                            className="
+                                flex
+                                items-center
+                                gap-2
+                                bg-red-500
+                                hover:bg-red-600
+                                text-white
+                                px-5
+                                py-2.5
+                                rounded-xl
+                                font-semibold
+                                cursor-pointer
+                            "
+                        >
 
-                        <FiTrash2 />
+                            <FiTrash2 />
 
-                        Delete
+                            Delete
 
-                    </button>
+                        </button>
+                    )
 
                 </div>
 

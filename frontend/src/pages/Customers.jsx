@@ -21,6 +21,9 @@ function Customers() {
 
     const navigate = useNavigate();
 
+    const user = JSON.parse(localStorage.getItem("user"));
+    const isOwner = user && user.role === "owner";
+
     useEffect(() => {
 
         API.get("/customers")
@@ -67,23 +70,27 @@ function Customers() {
 
                 </div>
 
-                <button
-                    onClick={() => navigate("/create-customer")}
-                    className="
-                        bg-pink-600
-                        hover:bg-pink-700
-                        text-white
-                        px-6
-                        py-3
-                        rounded-xl
-                        font-semibold
-                        shadow-md
-                        transition-all
-                        cursor-pointer
-                    "
-                >
-                    + New Customer
-                </button>
+                {
+                    isOwner && (
+                        <button
+                            onClick={() => navigate("/create-customer")}
+                            className="
+                                bg-pink-600
+                                hover:bg-pink-700
+                                text-white
+                                px-6
+                                py-3
+                                rounded-xl
+                                font-semibold
+                                shadow-md
+                                transition-all
+                                cursor-pointer
+                            "
+                        >
+                            + New Customer
+                        </button>
+                    )
+                }
 
             </div>
 

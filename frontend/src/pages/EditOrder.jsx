@@ -10,20 +10,31 @@ function EditOrder(){
     const [customers, setCustomers] = useState([]);
     const [formData, setFormData] = useState(null);
 
+    const user = JSON.parse(localStorage.getItem("user"));
+    const isOwner = user && user.role === "owner";
+
     useEffect(() => {
+        if(!isOwner){
+            alert("You are not authorized to edit orders");
+            navigate("/orders");
+        }
+    }, [isOwner, navigate]);
+
+    useEffect(() => {
+        if (!isOwner) return;
         const fetchData = async () => {
-            try{
+            try {
                 const customerResponse = await API.get("/customers");
                 setCustomers(customerResponse.data.data);
                 const orderResponse = await API.get(`/orders/${orderId}`);
                 setFormData(orderResponse.data.data);
             }
-            catch(error){
+            catch (error) {
                 alert("Failed to load the order");
             }
         };
         fetchData();
-    }, [orderId]);
+    }, [orderId, isOwner]);
 
     const handleChange = (event) => {
         setFormData({

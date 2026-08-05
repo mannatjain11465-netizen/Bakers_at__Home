@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Layout from "../components/Layout";
 import API from "../services/api";
 import CustomerForm from "../components/CustomerForm";
@@ -13,6 +13,16 @@ function CreateCustomer() {
         notes: ""
     });
     const navigate = useNavigate();
+    
+    const user = JSON.parse(localStorage.getItem("user"));
+    const isOwner = user && user.role === "owner";
+    
+    useEffect(() => {
+        if(!isOwner){
+            alert("You are not authorized to create customers");
+            navigate("/customers");
+        }
+    }, [isOwner, navigate]);
 
     const handleChange = (event) => {
 
@@ -24,24 +34,16 @@ function CreateCustomer() {
     };
 
     const handleSubmit = (event) => {
-
         event.preventDefault();
-
+        if (!isOwner) return;
         API.post("/customers", formData)
             .then((response) => {
-
-            alert("Customer created successfully!");
-
-
-            navigate(`/customers/${response.data.data._id}`);
-
-        })
+                alert("Customer created successfully!");
+                navigate(`/customers/${response.data.data._id}`);
+            })
             .catch((error) => {
-
                 alert("Failed to create customer.");
-
-        });
-
+            });
     };
 
     return (

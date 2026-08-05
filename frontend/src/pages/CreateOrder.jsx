@@ -63,7 +63,7 @@ function CreateOrder() {
                 customer: selectedCustomerId
             }));
         }
-    }, [selectedCustomerId])
+    }, [selectedCustomerId]);
 
     useEffect(() => {
         API.get("/customers")

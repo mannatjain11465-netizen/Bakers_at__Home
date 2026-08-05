@@ -8,6 +8,10 @@ import { FiArrowLeft } from "react-icons/fi";
 function EditCustomer() {
 
     const { customerId } = useParams();
+
+    const user = JSON.parse(localStorage.getItem("user"));
+    const isOwner = user && user.role === "owner";
+
     const navigate = useNavigate();
 
     const [loading, setLoading] = useState(true);
@@ -21,6 +25,14 @@ function EditCustomer() {
     });
 
     useEffect(() => {
+        if(!isOwner){
+            alert("You are not authorized to edit customers");
+            navigate("/customers");
+        }
+    }, [isOwner, navigate]);
+
+    useEffect(() => {
+        if (!isOwner) return;
 
         API.get(`/customers/${customerId}`)
             .then((response) => {
@@ -36,7 +48,7 @@ function EditCustomer() {
 
             });
 
-    }, [customerId]);
+    }, [customerId, isOwner]);
 
     const handleChange = (event) => {
 

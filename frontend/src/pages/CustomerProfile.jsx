@@ -24,6 +24,9 @@ function CustomerProfile() {
     const [stats, setStats] = useState(null);
     const [orders, setOrders] = useState([]);
 
+    const user = JSON.parse(localStorage.getItem("user"));
+    const isOwner = user && user.role === "owner";
+
     useEffect(() => {
         API.get(`/customers/${customerId}/profile`)
             .then((response) => {
@@ -108,49 +111,57 @@ function CustomerProfile() {
 
             <div className="flex gap-3">
 
-                <button
-                    onClick={() =>
-                        navigate(`/customers/${customerId}/edit`)
-                    }
-                    className="
-                        flex
-                        items-center
-                        gap-2
-                        bg-pink-600
-                        hover:bg-pink-700
-                        text-white
-                        px-5
-                        py-3
-                        rounded-xl
-                        font-semibold
-                        transition-all
-                        cursor-pointer
-                    "
-                >
-                    <FiEdit2 />
-                    Edit
-                </button>
+                {
+                    isOwner && (
+                        <button
+                            onClick={() =>
+                                navigate(`/customers/${customerId}/edit`)
+                            }
+                            className="
+                                flex
+                                items-center
+                                gap-2
+                                bg-pink-600
+                                hover:bg-pink-700
+                                text-white
+                                px-5
+                                py-3
+                                rounded-xl
+                                font-semibold
+                                transition-all
+                                cursor-pointer
+                            "
+                        >
+                            <FiEdit2 />
+                            Edit
+                        </button>
+                    )
+                }
 
-                <button
-                    onClick={handleDelete}
-                    className="
-                        flex
-                        items-center
-                        gap-2
-                        bg-red-500
-                        hover:bg-red-600
-                        text-white
-                        px-5
-                        py-3
-                        rounded-xl
-                        font-semibold
-                        transition-all
-                        cursor-pointer
-                    "
-                >
-                    <FiTrash2 />
-                    Delete
-                </button>
+                {
+                    isOwner && (
+                        <button
+                            onClick={handleDelete}
+                            className="
+                                flex
+                                items-center
+                                gap-2
+                                bg-red-500
+                                hover:bg-red-600
+                                text-white
+                                px-5
+                                py-3
+                                rounded-xl
+                                font-semibold
+                                transition-all
+                                cursor-pointer
+                            "
+                        >
+                            <FiTrash2 />
+                            Delete
+                        </button>
+                    )
+                }
 
             </div>
 

@@ -15,7 +15,7 @@ router.post("/",protect, authorize("owner", "employee"), createOrder);
 router.get("/", protect, authorize("owner", "employee"), getAllOrders);
 router.get("/:id", protect, authorize("owner", "employee"), getOrderById);
 router.put("/:id", protect, authorize("owner"), updateOrder);
-router.put("/:id/status", protect, authorize("owner"), updateOrderStatus);
+router.put("/:id/status", protect, authorize("owner", "employee"), updateOrderStatus);
 router.delete("/:id", protect, authorize("owner"), deleteOrder);
 
 export default router;
