@@ -13,6 +13,8 @@ import SingleOrder from "./pages/SingleOrder";
 import EditOrder from "./pages/EditOrder";
 import CustomerProfile from "./pages/CustomerProfile";
 import EditCustomer from "./pages/EditCustomer";
+import Employees from "./pages/Employees";
+import CreateEmployee from "./pages/CreateEmployee";
 
 function App() {
     return (
@@ -125,6 +127,24 @@ function App() {
                     element={
                         <ProtectedRoute>
                             <EditCustomer />
+                        </ProtectedRoute>
+                    }
+                />
+
+                <Route
+                    path="/employees"
+                    element={
+                        <ProtectedRoute>
+                            <Employees />
+                        </ProtectedRoute>
+                    }
+                />
+
+                <Route
+                    path="/create-employee"
+                    element={
+                        <ProtectedRoute>
+                            <CreateEmployee />
                         </ProtectedRoute>
                     }
                 />

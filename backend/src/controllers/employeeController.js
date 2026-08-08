@@ -1,4 +1,11 @@
 import User from "../models/User.js";
+import {
+    getEmployees,
+    getEmployeeById,
+    createEmployee,
+    updateEmployee,
+    deleteEmployee
+} from "../controllers/employeeController.js";
 
 export const getEmployees = async (req, res) => {
     try {
@@ -142,4 +149,40 @@ export const deleteEmployee = async (req, res) => {
         });
 
     }
+};
+
+export const getEmployeeById = async (req, res) => {
+
+    try {
+
+        const { id } = req.params;
+
+        const employee = await User.findOne({
+            _id: id,
+            role: "employee"
+        }).select("-password");
+
+        if (!employee) {
+
+            return res.status(404).json({
+                success: false,
+                message: "Employee not found"
+            });
+
+        }
+
+        return res.status(200).json({
+            success: true,
+            data: employee
+        });
+
+    } catch (error) {
+
+        return res.status(500).json({
+            success: false,
+            message: error.message
+        });
+
+    }
+
 };
