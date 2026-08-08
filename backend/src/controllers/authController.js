@@ -18,20 +18,29 @@
         try {
             const { name, email, password, phone } = req.body;
 
-            const existingUser = await User.findOne({ email });
+            const existingUser = await User.findOne({
+                $or: [
+                    { email : email?.toLowerCase() },
+                    { phone: phone }
+                ]
+            });
 
             if (existingUser) {
                 return res.status(409).json({
                     success: false,
-                    message: "User already exists",
+                    message: 
+                        existingUser.email === email?.toLowerCase()
+                        ? "Email already exists"
+                        : "Phone number already exists",
                 });
             }
 
             const user = await User.create({
                 name,
-                email,
+                email: email?.toLowerCase(),
                 password,
                 phone,
+                role : "owner"
             });
 
             const token = generateToken(user);
