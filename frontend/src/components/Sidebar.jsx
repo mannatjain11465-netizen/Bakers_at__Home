@@ -6,12 +6,16 @@ import {
     FiUsers,
     FiCalendar,
     FiLogOut,
+    FiUserCheck,
 } from "react-icons/fi";
 
 function Sidebar() {
 
     const location = useLocation();
     const navigate = useNavigate();
+
+    const user = JSON.parse(localStorage.getItem("user"));
+    const isOwner = user?.role === "owner";
 
     const menuItems = [
         {
@@ -34,6 +38,16 @@ function Sidebar() {
             path: "/calendar",
             icon: <FiCalendar size={20} />,
         },
+
+        ...(isOwner
+            ? [
+                  {
+                      name: "Employees",
+                      path: "/employees",
+                      icon: <FiUserCheck size={20} />,
+                  },
+              ]
+            : []),
     ];
 
     const handleLogout = () => {

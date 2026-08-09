@@ -1,14 +1,8 @@
 import User from "../models/User.js";
-import {
-    getEmployees,
-    getEmployeeById,
-    createEmployee,
-    updateEmployee,
-    deleteEmployee
-} from "../controllers/employeeController.js";
 
 export const getEmployees = async (req, res) => {
     try {
+
         const employees = await User.find({
             role: "employee"
         }).select("-password");
@@ -17,25 +11,31 @@ export const getEmployees = async (req, res) => {
             success: true,
             data: employees
         });
+
     } catch (error) {
 
         return res.status(500).json({
             success: false,
             message: error.message
         });
+
     }
 };
 
 export const createEmployee = async (req, res) => {
     try {
+
         const { name, email, phone, password } = req.body;
+
         const existingUser = await User.findOne({
             $or: [
                 { email: email.toLowerCase() },
                 { phone }
             ]
         });
+
         if (existingUser) {
+
             return res.status(409).json({
                 success: false,
                 message:
@@ -43,6 +43,7 @@ export const createEmployee = async (req, res) => {
                         ? "Email already exists"
                         : "Phone number already exists"
             });
+
         }
 
         const employee = await User.create({
@@ -94,9 +95,40 @@ export const updateEmployee = async (req, res) => {
 
         }
 
-        const { name, phone } = req.body;
+        const { name, email, phone } = req.body;
+
+        // Duplicate email check
+        const emailExists = await User.findOne({
+            email: email.toLowerCase(),
+            _id: { $ne: id }
+        });
+
+        if (emailExists) {
+
+            return res.status(409).json({
+                success: false,
+                message: "Email already exists"
+            });
+
+        }
+
+        // Duplicate phone check
+        const phoneExists = await User.findOne({
+            phone,
+            _id: { $ne: id }
+        });
+
+        if (phoneExists) {
+
+            return res.status(409).json({
+                success: false,
+                message: "Phone number already exists"
+            });
+
+        }
 
         employee.name = name;
+        employee.email = email.toLowerCase();
         employee.phone = phone;
 
         await employee.save();
@@ -114,6 +146,7 @@ export const updateEmployee = async (req, res) => {
         });
 
     }
+
 };
 
 export const deleteEmployee = async (req, res) => {
@@ -149,6 +182,7 @@ export const deleteEmployee = async (req, res) => {
         });
 
     }
+
 };
 
 export const getEmployeeById = async (req, res) => {

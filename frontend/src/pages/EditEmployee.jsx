@@ -78,6 +78,7 @@ function EditEmployee() {
 
             await API.put(`/employees/${id}`, {
                 name: formData.name,
+                email: formData.email,
                 phone: formData.phone
             });
 

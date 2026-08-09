@@ -1,4 +1,9 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import {
+    BrowserRouter,
+    Routes,
+    Route,
+    Navigate
+} from "react-router-dom";
 import PublicRoute from "./components/PublicRoute";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Login from "./pages/Login";
@@ -8,19 +13,28 @@ import Customers from "./pages/Customers";
 import Orders from "./pages/Orders";
 import Calendar from "./pages/Calendar";
 import CreateOrder from "./pages/CreateOrder";
-import CreateCustomer from "./pages/CreateCustomer";
-import SingleOrder from "./pages/SingleOrder";
 import EditOrder from "./pages/EditOrder";
+import SingleOrder from "./pages/SingleOrder";
+import CreateCustomer from "./pages/CreateCustomer";
 import CustomerProfile from "./pages/CustomerProfile";
 import EditCustomer from "./pages/EditCustomer";
 import Employees from "./pages/Employees";
 import CreateEmployee from "./pages/CreateEmployee";
+import EditEmployee from "./pages/EditEmployee";
+import EmployeeProfile from "./pages/EmployeeProfile";
 
 function App() {
+
     return (
+
         <BrowserRouter>
 
             <Routes>
+
+                <Route
+                    path="/"
+                    element={<Navigate to="/login" replace />}
+                />
 
                 <Route
                     path="/login"
@@ -30,7 +44,6 @@ function App() {
                         </PublicRoute>
                     }
                 />
-                
 
                 <Route
                     path="/register"
@@ -60,55 +73,10 @@ function App() {
                 />
 
                 <Route
-                    path="/orders"
-                    element={
-                        <ProtectedRoute>
-                            <Orders />
-                        </ProtectedRoute>
-                    }
-                />
-
-                <Route
-                    path="/calendar"
-                    element={
-                        <ProtectedRoute>
-                            <Calendar />
-                        </ProtectedRoute>
-                    }
-                />
-
-                <Route
-                    path="/create-order"
-                    element={
-                        <ProtectedRoute>
-                            <CreateOrder />
-                        </ProtectedRoute>
-                    }
-                />
-
-                <Route
                     path="/create-customer"
                     element={
                         <ProtectedRoute>
                             <CreateCustomer />
-                        </ProtectedRoute>
-                    }
-                />
-
-                <Route
-                    path="/orders/:orderId"
-                    element={
-                        <ProtectedRoute>
-                            <SingleOrder />
-                        </ProtectedRoute>
-                    }
-                />
-
-                <Route
-                    path="/orders/:orderId/edit"
-                    element={
-                        <ProtectedRoute>
-                            <EditOrder />
                         </ProtectedRoute>
                     }
                 />
@@ -132,6 +100,51 @@ function App() {
                 />
 
                 <Route
+                    path="/orders"
+                    element={
+                        <ProtectedRoute>
+                            <Orders />
+                        </ProtectedRoute>
+                    }
+                />
+
+                <Route
+                    path="/create-order"
+                    element={
+                        <ProtectedRoute>
+                            <CreateOrder />
+                        </ProtectedRoute>
+                    }
+                />
+
+                <Route
+                    path="/orders/:orderId"
+                    element={
+                        <ProtectedRoute>
+                            <SingleOrder />
+                        </ProtectedRoute>
+                    }
+                />
+
+                <Route
+                    path="/orders/:orderId/edit"
+                    element={
+                        <ProtectedRoute>
+                            <EditOrder />
+                        </ProtectedRoute>
+                    }
+                />
+
+                <Route
+                    path="/calendar"
+                    element={
+                        <ProtectedRoute>
+                            <Calendar />
+                        </ProtectedRoute>
+                    }
+                />
+
+                <Route
                     path="/employees"
                     element={
                         <ProtectedRoute>
@@ -149,10 +162,39 @@ function App() {
                     }
                 />
 
+                <Route
+                    path="/employees/:id/edit"
+                    element={
+                        <ProtectedRoute>
+                            <EditEmployee />
+                        </ProtectedRoute>
+                    }
+                />
+
+                <Route
+                    path="/employees/:id"
+                    element={
+                        <ProtectedRoute>
+                            <EmployeeProfile />
+                        </ProtectedRoute>
+                    }
+                />
+
+                <Route
+                    path="/employees/:id"
+                    element={
+                        <ProtectedRoute>
+                            <EmployeeProfile />
+                        </ProtectedRoute>
+                    }
+                />
+
             </Routes>
 
         </BrowserRouter>
+
     );
+
 }
 
 export default App;
